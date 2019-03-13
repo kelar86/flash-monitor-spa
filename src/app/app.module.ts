@@ -8,19 +8,26 @@ import { SearchComponent } from './components/search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MonitorApiService } from './services/monitor-api.service';
 import { ClockComponent } from './components/clock/clock.component';
+import { HeaderContainerComponent } from './components/header-container/header-container.component';
+import { ProblemFormComponent } from './components/problem-form/problem-form.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    ClockComponent
+    ClockComponent,
+    HeaderContainerComponent,
+    ProblemFormComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFontAwesomeModule
   ],
   providers: [MonitorApiService, HttpClient,
     HttpClientModule],

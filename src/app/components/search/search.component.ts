@@ -1,13 +1,12 @@
 import { MonitorApiService } from './../../services/monitor-api.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subject, of, merge } from 'rxjs';
-import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Observable, Subject, merge } from 'rxjs';
+import { NgbTypeahead, NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
 import {
   debounceTime,
   distinctUntilChanged,
   filter,
-  takeUntil,
-  concatMap
+  switchMap,
 } from 'rxjs/operators';
 
 
@@ -17,13 +16,15 @@ import {
   template: `
 
   <ng-template #rt let-r="result" let-t="term">
-    <!--  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1" style="width: 16px"> -->
+     <img [src]="r['icon']" class="mr-2"  alt="иконка">
      <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
   </ng-template>
 
   <div class="container">
-  <label>Поиск:
+  
     <input 
+      aria-label="Поиск"
+      placeholder="Введите приложение, блок управления, агрегат, кузов..."
       type="text" 
       class="form-control" 
       [(ngModel)]="search_result" 
@@ -31,46 +32,45 @@ import {
       [inputFormatter]="formatter"
       [resultTemplate]="rt" 
       (focus)="focus$.next($event.target.value)"
-      (click)="click$.next($event.target.value)"
-      (selectItem)="onSelect()"
+      (selectItem)="onSelect($event)"
       #instance="ngbTypeahead"/>
-  </label>
-   </div>
 
-   {{instance.isPopupOpen()}}
-  
-   {{search_result | json}}
-   <pre>{{problems | json}}</pre>
+   </div>
    
   `,
-  styles: []
+  styles: [`
+    img {
+      width: 20px
+    }
+    input {
+      width: 100%
+      margin: 20px;
+    }
+  `]
 })
 export class SearchComponent implements OnInit {
 
-  problems;
+  @Output() valueChange = new EventEmitter();
 
   private search_result;
 
   constructor(private api: MonitorApiService) { }
 
-  ngOnInit() {
-    this.api.getProblems().subscribe(value => this.problems = value);
-  }
+  ngOnInit() { }
 
   @ViewChild('instance') instance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
-  select$ = new Subject<string>();
 
-  onSelect() {
-    this.instance.dismissPopup();
+  onSelect(ev) {
+    this.valueChange.emit(ev.item);
   }
 
   search = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
     const clicksWithClosedPopup$ = this.click$
       .pipe(
-        filter(() => !this.instance.isPopupOpen()),
+        filter(() => !this.instance.isPopupOpen())
       );
 
     const inputFocus$ = this.focus$;
@@ -81,16 +81,14 @@ export class SearchComponent implements OnInit {
       clicksWithClosedPopup$
     )
       .pipe(
-        // filter(v => v === ''),
-
-        concatMap(term => {
-          // console.log('switchMap');
-          return this.api.search(term)
+        switchMap(term => {
+          return this.api.search(term);
         }),
       );
 
+
   }
 
-  formatter = (x: { name: string }) => x.name;
+  formatter = (x: { name: string, type: string }) => `${x.name} - ${x.type}`;
 
 }

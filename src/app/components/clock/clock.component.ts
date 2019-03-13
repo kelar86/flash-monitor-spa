@@ -5,11 +5,11 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-clock',
   template: `
-    <p>
-      clock works!
-      {{dateTime | date: 'fullTime'}}
-      {{timer | async}}
-    </p>
+    <div class="clock">
+      <time class="cloc__time">
+        {{dateTime | date: 'd MMMM yyyy'}} <strong>{{dateTime |date: 'hh:mm:ss (z)'}}</strong>
+      </time>
+    </div>
   `,
   styles: []
 })
