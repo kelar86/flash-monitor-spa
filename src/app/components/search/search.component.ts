@@ -1,3 +1,4 @@
+import { FILTER_ITEM_TYPES } from './../../constants/filter-item-types';
 import { MonitorApiService } from './../../services/monitor-api.service';
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Observable, Subject, merge } from 'rxjs';
@@ -44,7 +45,6 @@ import {
     }
     input {
       width: 100%
-      margin: 20px;
     }
   `]
 })
@@ -89,6 +89,6 @@ export class SearchComponent implements OnInit {
 
   }
 
-  formatter = (x: { name: string, type: string }) => `${x.name} - ${x.type}`;
+  formatter = (x: { name: string, type: string }) => `${x.name} - ${FILTER_ITEM_TYPES[x.type]}`;
 
 }
