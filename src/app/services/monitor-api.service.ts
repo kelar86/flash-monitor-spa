@@ -16,7 +16,13 @@ export class MonitorApiService {
   getProblems() {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
-      .get(`http://${this.baseUrl}/problems/`, { headers: headers })
+      .get(`http://${this.baseUrl}/problems/`, { headers: headers });
+  }
+
+  getAlerts(filter) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .get(`http://${this.baseUrl}/alerts/?search=${filter}`, { headers: headers });
   }
 
   search(query) {
@@ -24,9 +30,9 @@ export class MonitorApiService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     if (query === '') {
-      return this.http.get(`http://${this.baseUrl}/advise-search`, { headers: headers })
+      return this.http.get(`http://${this.baseUrl}/top-problems`, { headers: headers });
     }
 
-    return this.http.get(`http://${this.baseUrl}/search?search=${query}`, { headers: headers });
+    return this.http.get(`http://${this.baseUrl}/filter-advise?search=${query}`, { headers: headers });
   }
 }

@@ -1,53 +1,54 @@
-<form>
-  <h3>Заявить о проблеме</h3>
-  <!-- DatePicker -->
-  <div>
-    <label> Дата и время
-      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker
-        #d="ngbDatepicker">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
-            class="fa fa-calendar"></i></button>
-      </div>
-    </label>
-  </div>
-  <!-- Приложение -->
-  <div>
-    <label>Приложение
-      <select class="form-control">
-        <option>Приложение1</option>
-      </select>
-    </label>
-  </div>
-  <!-- Блоки управления -->
-  <div>
-    <label>Блоки управления
-      <textarea class="form-control" aria-label="Блоки управления"></textarea>
-    </label>
-  </div>
-  <!-- Агрегат -->
-  <div>
-    <label>Агрегат
-      <textarea class="form-control" aria-label="Агрегат"></textarea>
-    </label>
-  </div>
+<div class="modal-body">
+  <form class="problem-form">
+    <h3>Заявить о проблеме</h3>
+    <!-- DatePicker -->
+    <div>
+      <label> Дата и время
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
+                class="fa fa-calendar"></i></button>
+          </div>
+        </div>
+      </label>
+    </div>
+    <!-- Приложение -->
+    <div>
+      <label>Приложение
+        <select class="form-control">
+          <option>Приложение1</option>
+        </select>
+      </label>
+    </div>
+    <!-- Блоки управления -->
+    <div>
+      <label>Блоки управления
+        <textarea class="form-control" aria-label="Блоки управления"></textarea>
+      </label>
+    </div>
+    <!-- Агрегат -->
+    <div>
+      <label>Агрегат
+        <textarea class="form-control" aria-label="Агрегат"></textarea>
+      </label>
+    </div>
 
-  <!--Кузов -->
-  <div>
-    <label>Кузов
-      <textarea class="form-control" aria-label="Кузов"></textarea>
-    </label>
-  </div>
-  <!-- Описание проблемы -->
-  <div>
-    <label>Описание проблемы
-      <textarea class="form-control" aria-label="Описание проблемы"></textarea>
-    </label>
-  </div>
-
-  <div>
-    <button class="btn btn-primary">Отправить</button>
-    <button class="btn btn-primary">Закрыть</button>
-  </div>
-
-</form>
+    <!--Кузов -->
+    <div>
+      <label>Кузов
+        <textarea class="form-control" aria-label="Кузов"></textarea>
+      </label>
+    </div>
+    <!-- Описание проблемы -->
+    <div>
+      <label>Описание проблемы
+        <textarea class="form-control" aria-label="Описание проблемы"></textarea>
+      </label>
+    </div>
+    <div>
+      <button class="btn btn-dark" (click)="activeModal.close('Send click')" >Отправить</button>
+      <button class="btn btn-dark" (click)="activeModal.close('Close click')" >Закрыть</button>
+    </div>
+  </form>
+</div>

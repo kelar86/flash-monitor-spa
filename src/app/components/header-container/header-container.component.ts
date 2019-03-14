@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProblemFormComponent } from '../problem-form/problem-form.component';
 
 @Component({
   selector: 'app-header-container',
@@ -17,29 +19,32 @@ import { Component, OnInit } from '@angular/core';
           <app-clock></app-clock>
         </div>
        </div>
-       <div class="row"> 
+       <div class="row">
             <nav class="col-4">
-              <button class="btn btn-dark"> + Проблема </button>
+              <button class="btn btn-dark" (click)="open()"> + Проблема </button>
             </nav>
             <div class="col-8">
               <app-search (valueChange)='getFilterOption($event)'></app-search>
             </div>
         </div>
-        
-     
-      </div>  
+      </div>
     </header>
   `,
   styleUrls: [`./header-container.component.css`]
 })
 export class HeaderContainerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
 
   getFilterOption($event) {
     console.log($event);
+  }
+
+  open() {
+    this.modalService.open(ProblemFormComponent);
+
   }
 }

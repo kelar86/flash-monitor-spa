@@ -11,6 +11,7 @@ import { ClockComponent } from './components/clock/clock.component';
 import { HeaderContainerComponent } from './components/header-container/header-container.component';
 import { ProblemFormComponent } from './components/problem-form/problem-form.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { DashContainerComponent } from './components/dash-container/dash-container.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     SearchComponent,
     ClockComponent,
     HeaderContainerComponent,
-    ProblemFormComponent
+    ProblemFormComponent,
+    DashContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +31,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     ReactiveFormsModule,
     AngularFontAwesomeModule
   ],
+  entryComponents: [ProblemFormComponent],
   providers: [MonitorApiService, HttpClient,
     HttpClientModule],
   bootstrap: [AppComponent]

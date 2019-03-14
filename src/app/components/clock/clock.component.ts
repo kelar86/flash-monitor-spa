@@ -17,7 +17,7 @@ export class ClockComponent implements OnInit {
 
   constructor() { }
 
-  private dateTime = new Date();
+  dateTime = new Date();
   private timer;
   private subscribtion: Subscription;
 

@@ -22,22 +22,22 @@ import {
   </ng-template>
 
   <div class="container">
-  
-    <input 
+
+    <input
       aria-label="Поиск"
       placeholder="Введите приложение, блок управления, агрегат, кузов..."
-      type="text" 
-      class="form-control" 
-      [(ngModel)]="search_result" 
+      type="text"
+      class="form-control"
+      [(ngModel)]="search_result"
       [ngbTypeahead]="search"
       [inputFormatter]="formatter"
-      [resultTemplate]="rt" 
+      [resultTemplate]="rt"
       (focus)="focus$.next($event.target.value)"
       (selectItem)="onSelect($event)"
       #instance="ngbTypeahead"/>
 
    </div>
-   
+
   `,
   styles: [`
     img {
@@ -52,7 +52,7 @@ export class SearchComponent implements OnInit {
 
   @Output() valueChange = new EventEmitter();
 
-  private search_result;
+  search_result;
 
   constructor(private api: MonitorApiService) { }
 
