@@ -7,7 +7,7 @@ import * as moment from 'moment';
   template: `
     <div class="clock">
       <time class="cloc__time">
-        {{dateTime | date: 'd MMMM yyyy'}} <strong>{{dateTime |date: 'hh:mm:ss (z)'}}</strong>
+        {{dateTime | date: 'd MMMM yyyy'}} <strong>{{dateTime |date: 'HH:mm:ss (z)'}}</strong>
       </time>
     </div>
   `,

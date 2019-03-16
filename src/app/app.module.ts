@@ -12,6 +12,7 @@ import { HeaderContainerComponent } from './components/header-container/header-c
 import { ProblemFormComponent } from './components/problem-form/problem-form.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { DashContainerComponent } from './components/dash-container/dash-container.component';
+import { AlertGridComponent } from './components/alert-grid/alert-grid.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { DashContainerComponent } from './components/dash-container/dash-contain
     ClockComponent,
     HeaderContainerComponent,
     ProblemFormComponent,
-    DashContainerComponent
+    DashContainerComponent,
+    AlertGridComponent
   ],
   imports: [
     BrowserModule,

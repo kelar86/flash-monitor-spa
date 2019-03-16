@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Catalog } from './../../models/catalogs';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProblemFormComponent } from '../problem-form/problem-form.component';
 
@@ -24,7 +25,7 @@ import { ProblemFormComponent } from '../problem-form/problem-form.component';
               <button class="btn btn-dark" (click)="open()"> + Проблема </button>
             </nav>
             <div class="col-8">
-              <app-search (valueChange)='getFilterOption($event)'></app-search>
+              <app-search (valueChange)='getFilterOption($event)' [catalogType]="catalog.type()"></app-search>
             </div>
         </div>
       </div>
@@ -33,6 +34,8 @@ import { ProblemFormComponent } from '../problem-form/problem-form.component';
   styleUrls: [`./header-container.component.css`]
 })
 export class HeaderContainerComponent implements OnInit {
+
+  @Input() catalog: Catalog;
 
   constructor(private modalService: NgbModal) { }
 
@@ -44,7 +47,14 @@ export class HeaderContainerComponent implements OnInit {
   }
 
   open() {
-    this.modalService.open(ProblemFormComponent);
+    const modalReference = this.modalService.open(ProblemFormComponent);
 
+    modalReference.result.then((result) => {
+      console.log(result);
+      modalReference.close();
+    }, (reason) => {
+      console.log(reason);
+      modalReference.close()
+    });
   }
 }

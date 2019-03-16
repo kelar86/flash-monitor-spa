@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-problem-form',

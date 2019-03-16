@@ -25,11 +25,11 @@ export class MonitorApiService {
       .get(`http://${this.baseUrl}/alerts/?search=${filter}`, { headers: headers });
   }
 
-  search(query) {
+  getFilterAdvise(query, catalogType) {
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    if (query === '') {
+    if (query === '' && catalogType === 'ALL') {
       return this.http.get(`http://${this.baseUrl}/top-problems`, { headers: headers });
     }
 

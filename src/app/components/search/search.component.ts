@@ -1,6 +1,7 @@
+import { Catalog } from './../../models/catalogs';
 import { FILTER_ITEM_TYPES } from './../../constants/filter-item-types';
 import { MonitorApiService } from './../../services/monitor-api.service';
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { Observable, Subject, merge } from 'rxjs';
 import { NgbTypeahead, NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -50,6 +51,7 @@ import {
 })
 export class SearchComponent implements OnInit {
 
+  @Input() catalogType: string;
   @Output() valueChange = new EventEmitter();
 
   search_result;
@@ -82,7 +84,7 @@ export class SearchComponent implements OnInit {
     )
       .pipe(
         switchMap(term => {
-          return this.api.search(term);
+          return this.api.getFilterAdvise(term, this.catalogType);
         }),
       );
 

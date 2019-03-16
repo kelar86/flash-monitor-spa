@@ -1,27 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Alert } from './../../models/alert';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MonitorApiService } from 'src/app/services/monitor-api.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dash-container',
   template: `
     <p>
-      dash-container works!
+      <app-alert-grid [alerts]="(alerts | async)">
+
+      </app-alert-grid>
     </p>
-    <pre>{{alerts | json}}</pre>
   `,
   styles: []
 })
 export class DashContainerComponent implements OnInit {
 
-  private alerts;
+  private alerts: Alert[];
 
   constructor(private api: MonitorApiService) {
-   }
+  }
 
   ngOnInit() {
 
     this.api.getAlerts('')
-    .subscribe(value => this.alerts = value);
+      .pipe(map((value: []) => value.map(item => new Alert().deserialize(item))));
+
   }
 
 }
