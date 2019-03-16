@@ -11,8 +11,9 @@ import { ClockComponent } from './components/clock/clock.component';
 import { HeaderContainerComponent } from './components/header-container/header-container.component';
 import { ProblemFormComponent } from './components/problem-form/problem-form.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { DashContainerComponent } from './components/dash-container/dash-container.component';
+import { DealerPanelComponent } from './components/dealer-panel/dealer-panel.component';
 import { AlertGridComponent } from './components/alert-grid/alert-grid.component';
+import { EmergencyIconsComponent } from './components/emergency-icons/emergency-icons.component';
 
 
 @NgModule({
@@ -22,8 +23,9 @@ import { AlertGridComponent } from './components/alert-grid/alert-grid.component
     ClockComponent,
     HeaderContainerComponent,
     ProblemFormComponent,
-    DashContainerComponent,
-    AlertGridComponent
+    DealerPanelComponent,
+    AlertGridComponent,
+    EmergencyIconsComponent
   ],
   imports: [
     BrowserModule,

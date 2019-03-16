@@ -8,6 +8,7 @@ export class User implements Deserializable {
     email: string;
 
     deserialize(input: any) {
+        Object.assign(this, input);
         return this;
     }
 }

@@ -18,6 +18,7 @@ export class Alert implements Deserializable {
     category: string;
     description: string;
     is_planed: boolean;
+    is_expiered: boolean;
 
     deserialize(input: any) {
         Object.assign(this, input);

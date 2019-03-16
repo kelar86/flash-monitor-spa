@@ -15,12 +15,11 @@ import { ProblemFormComponent } from '../problem-form/problem-form.component';
         <div class="col">
           <h4>Flash Monitor</h4>
         </div>
-
         <div class="col">
           <app-clock></app-clock>
         </div>
        </div>
-       <div class="row">
+       <div class="row mt-2">
             <nav class="col-4">
               <button class="btn btn-dark" (click)="open()"> + Проблема </button>
             </nav>

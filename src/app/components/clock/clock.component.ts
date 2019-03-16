@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, timer, Subscription } from 'rxjs';
-import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-clock',
   template: `
     <div class="clock">
       <time class="cloc__time">
-        {{dateTime | date: 'd MMMM yyyy'}} <strong>{{dateTime |date: 'HH:mm:ss (z)'}}</strong>
+        {{dateTime | date: 'd MMMM yyyy'}}
+        <strong>{{dateTime |date: 'HH:mm:ss'}}</strong>
+        {{dateTime |date: '(z)' }}
       </time>
     </div>
   `,
@@ -24,11 +26,10 @@ export class ClockComponent implements OnInit {
   ngOnInit() {
     this.timer = timer(1000, 1000);
     this.subscribtion = this.timer.subscribe(() => this.dateTime = new Date());
-
   }
 
 
   ngOndestroy() {
-
+    this.subscribtion.unsubscribe()
   }
 }

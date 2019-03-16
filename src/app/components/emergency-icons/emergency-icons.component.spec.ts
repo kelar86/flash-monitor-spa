@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashContainerComponent } from './dash-container.component';
+import { EmergencyIconsComponent } from './emergency-icons.component';
 
-describe('DashContainerComponent', () => {
-  let component: DashContainerComponent;
-  let fixture: ComponentFixture<DashContainerComponent>;
+describe('EmergencyIconsComponent', () => {
+  let component: EmergencyIconsComponent;
+  let fixture: ComponentFixture<EmergencyIconsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashContainerComponent ]
+      declarations: [ EmergencyIconsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashContainerComponent);
+    fixture = TestBed.createComponent(EmergencyIconsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -18,7 +18,7 @@ import {
   template: `
 
   <ng-template #rt let-r="result" let-t="term">
-     <img [src]="r['icon']" class="mr-2"  alt="иконка">
+     <img [src]="r['icon']" class="mr-2"  alt="image">
      <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
   </ng-template>
 
