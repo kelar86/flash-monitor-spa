@@ -8,6 +8,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th scope="col" *ngIf="isControlAlerts()">Нерабочие блоки управления</th>
           <th scope="col">Нерабочие приложения</th>
           <th scope="col">Описание</th>
           <th scope="col">Начало (план)</th>
@@ -17,6 +18,12 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
       </thead>
       <tbody>
         <tr *ngFor="let alert of alerts; index as i">
+          <td *ngIf="isControlAlerts()">
+          <span *ngFor="let control of alert.control">
+              <img src="{{control.icon}}" id="control-img" alt="image">
+              <label for="control-img">{{control.name}}</label>
+          </span>
+          </td>
           <td>
           {{alert.application.name}}
           </td>
@@ -46,6 +53,10 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
   thead {
     background: gainsboro;
   }
+  img {
+    width: 30px;
+    display: block;
+  }
   `]
 })
 export class AlertGridComponent implements OnInit {
@@ -56,6 +67,12 @@ export class AlertGridComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  // Check that all alerts are 'by control' category.
+  // TODO: Refactoring. Move this logic to better place, or use class polymorphism
+  isControlAlerts() {
+    return this.alerts && this.alerts.filter(item => item.category == 'CONTROL_ALERT').length === this.alerts.length;
   }
 
 }
