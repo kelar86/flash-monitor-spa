@@ -1,4 +1,3 @@
-import { Catalog } from './../../models/catalogs';
 import { FILTER_ITEM_TYPES } from './../../constants/filter-item-types';
 import { MonitorApiService } from './../../services/monitor-api.service';
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';

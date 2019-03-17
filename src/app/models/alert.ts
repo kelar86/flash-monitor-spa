@@ -31,3 +31,30 @@ export class Alert implements Deserializable {
         return this;
     }
 }
+
+export class AlertList {
+    list: Alert[];
+
+    constructor(list) {
+        this.list = list;
+    }
+
+    getAlerts() {
+        return this.list;
+    }
+
+    getPlanedAlerts() {
+        return this.list.filter(item => item.is_planed);
+    }
+
+    getAlertsByApplicationCategory() {
+        return this.list
+            .filter(item => item.category === 'APPLICATION_ALERT');
+    }
+
+    getAlertsByControlCategory() {
+        return this.list
+            .filter(item => item.category === 'CONTROL_ALERT')
+    }
+
+}

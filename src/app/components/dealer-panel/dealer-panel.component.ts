@@ -1,15 +1,22 @@
+import { Application } from './../../models/application';
+import { AlertList } from './../../models/alert';
 import { Alert } from '../../models/alert';
 import { Component, OnInit, Input } from '@angular/core';
-import { map, filter } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, filter, merge } from 'rxjs/operators';
+import { Observable, pipe, of } from 'rxjs';
+
 
 @Component({
   selector: 'app-dealer-panel',
   template: `
-    <div>
+    
+    <app-emergency-icons 
+      [applications]="(applications | async)"
+      ></app-emergency-icons>
+    
+    <div class="grid-container">
       <h4>Активные алерты по приложениям</h4>
-      
-        <app-emergency-icons [alerts]="(alerts | async)"></app-emergency-icons>
+
         <app-alert-grid [alerts]="(byApplication | async)"></app-alert-grid>
       
       <h4>Частичная потеря работоспособности</h4>
@@ -22,11 +29,12 @@ import { Observable } from 'rxjs';
 })
 export class DealerPanelComponent implements OnInit {
 
-  @Input() alerts: Observable<Alert[]>;
-
-  public byApplication: Observable<Alert[]>;
-  public byControl: Observable<Alert[]>;;
-  public isPlaned: Observable<Alert[]>;;
+  @Input() applications: Observable<Application[]>;
+  @Input() applicationsCrashed: Observable<Application[]>;
+  @Input() applicationsCrashedByControl: Observable<Application[]>;
+  @Input() byApplication: Observable<Alert[]>;
+  @Input() byControl: Observable<Alert[]>;
+  @Input() isPlaned: Observable<Alert[]>;
 
   constructor() {
   }
@@ -34,9 +42,6 @@ export class DealerPanelComponent implements OnInit {
 
   ngOnInit() {
 
-    this.byApplication = this.alerts.pipe(map(list => list.filter(alert => alert.category === 'APPLICATION_ALERT')));
-    this.byControl = this.alerts.pipe(map(list => list.filter(alert => alert.category === 'CONTROL_ALERT')));
-    this.isPlaned = this.byApplication.pipe(map(list => list.filter(alert => alert.is_planed)));
   }
 
 }

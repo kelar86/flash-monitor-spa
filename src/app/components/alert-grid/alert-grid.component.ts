@@ -1,4 +1,4 @@
-import { Alert } from './../../models/alert';
+import { Alert, AlertList } from './../../models/alert';
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
@@ -46,7 +46,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
           </td>
         </tr>
       </tbody>
-    </table>  
+    </table> 
     
   `,
   styles: [`

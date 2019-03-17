@@ -13,3 +13,12 @@ export class Application implements Deserializable {
     }
 
 }
+
+export class CrashedApp extends Application {
+    alert_category: string;
+
+    constructor(alert_category) {
+        super();
+        this.alert_category = alert_category;
+    }
+}
