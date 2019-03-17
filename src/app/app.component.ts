@@ -4,7 +4,7 @@ import { Catalog } from './models/catalogs';
 import { Component } from '@angular/core';
 import { MonitorApiService } from './services/monitor-api.service';
 import { map } from 'rxjs/operators';
-import { Observable, merge } from 'rxjs';
+import { Observable, merge, Subject, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -33,8 +33,6 @@ export class AppComponent {
   public alerts: Observable<AlertList>;
   public applications: Observable<Application[]>;
 
-  public applicationsCrashed: Observable<Application[]>
-  public applicationsCrashedByControl: Observable<Application[]>
   public byApplication: Observable<Alert[]>;
   public byControl: Observable<Alert[]>;;
   public isPlaned: Observable<Alert[]>;;
@@ -79,5 +77,12 @@ export class AppComponent {
       ));
 
   }
+  
+  applyFilter(data) {
+    console.log(data);
+    this.api.getAlerts(data.name).pipe(map(item => new AlertList(item)))
+      .subscribe(v => console.log(v));
+  }
+
 
 }

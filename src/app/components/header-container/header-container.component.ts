@@ -43,7 +43,7 @@ export class HeaderContainerComponent implements OnInit {
   }
 
   getFilterOption($event) {
-    console.log($event);
+    this.filterChange.emit($event);
   }
 
   open() {
