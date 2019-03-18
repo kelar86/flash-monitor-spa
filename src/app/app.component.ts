@@ -3,7 +3,7 @@ import { Application, CrashedApp } from './models/application';
 import { Catalog } from './models/catalogs';
 import { Component, OnInit } from '@angular/core';
 import { MonitorApiService } from './services/monitor-api.service';
-import { map, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable, merge, Subject, of } from 'rxjs';
 
 @Component({

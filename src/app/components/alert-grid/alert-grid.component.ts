@@ -77,7 +77,7 @@ export class AlertGridComponent implements OnInit {
   // Check that all alerts are 'by control' category.
   // TODO: Refactoring. Move this logic to better place, or use class polymorphism
   isControlAlerts() {
-    return this.alerts && this.alerts.filter(item => item.category == 'CONTROL_ALERT').length === this.alerts.length;
+    return this.alerts && this.alerts.filter(item => item.category === 'CONTROL_ALERT').length === this.alerts.length;
   }
 
 }
