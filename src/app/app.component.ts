@@ -1,7 +1,7 @@
 import { AlertList, Alert } from './models/alert';
 import { Application, CrashedApp } from './models/application';
 import { Catalog } from './models/catalogs';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MonitorApiService } from './services/monitor-api.service';
 import { map, mergeMap } from 'rxjs/operators';
 import { Observable, merge, Subject, of } from 'rxjs';
@@ -28,7 +28,7 @@ import { Observable, merge, Subject, of } from 'rxjs';
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   public alerts: Observable<AlertList>;
   public applications: Observable<Application[]>;
@@ -79,23 +79,13 @@ export class AppComponent {
         ));
     });
 
-    // this.byApplication = this.alerts.pipe(
-    //   map(list => list.getAlertsByApplicationCategory()));
-
-    // this.byControl = this.alerts.pipe(
-    //   map(list => list.getAlertsByControlCategory()));
-
-    // this.isPlaned = this.alerts.pipe(
-    //   map(list => list.getPlanedAlerts()));
-
-
-
-
   }
 
   applyFilter(data) {
 
     // TODO: DRY!  MOVE IT TO A SERVICE
+
+    console.log(data);
 
     this.alerts = this.api.getAlerts(data.name).pipe(map(item => new AlertList(item)));
 

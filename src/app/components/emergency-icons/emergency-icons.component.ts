@@ -6,18 +6,26 @@ import { Component, OnInit, Input } from '@angular/core';
   selector: 'app-emergency-icons',
   template: `
   <div class="container">
-    <div class="application-container">
+    <div class="application-container" *ngIf="applications">
       <div class="app" *ngFor="let application of applications"
           [style.background-color]= "application.alert_category === 'CONTROL_ALERT' ? 'yellow' : 'red'" >
             <img class="float-center" src="{{application.icon}}" alt="{{application.name}}">
         </div>
     </div>
-  </div>  
+
+  <p *ngIf="applications.length === 0">
+    <ngb-alert [dismissible]="false" type="success" >
+      Все приложения работают в штатном режиме.
+    </ngb-alert>
+  </p>
+
+  </div>
+
   `,
   styles: [`
     img {
       max-width: 60px;
-      max-height: 60px; 
+      max-height: 60px;
     }
     .application-container {
       display: grid;
@@ -32,7 +40,7 @@ import { Component, OnInit, Input } from '@angular/core';
       align-items: center;
       justify-items: center;
       width:100%;
-      height:100%; 
+      height:100%;
     }
     .container {
       margin-top: 20px;

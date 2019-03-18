@@ -16,7 +16,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
           <th scope="col">агрегат/кузов</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="alerts">
         <tr *ngFor="let alert of alerts; index as i">
           <td *ngIf="isControlAlerts()">
           <span *ngFor="let control of alert.control">
@@ -40,14 +40,19 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
             <span *ngIf="alert.unit.length > 0 ||
                          alert.body_type.length > 0">
                   <span *ngFor="let unit of alert.unit">{{unit.name}}</span>
-                   / 
+                   /
                   <span *ngFor="let type of alert.body_type">{{type.name}}</span>
             </span>
           </td>
         </tr>
       </tbody>
-    </table> 
-    
+    </table>
+    <p *ngIf="alerts.length === 0">
+      <ngb-alert [dismissible]="false" type="success" >
+        Активные алерты в данной категории отсутствуют.
+      </ngb-alert>
+   </p>
+
   `,
   styles: [`
   thead {

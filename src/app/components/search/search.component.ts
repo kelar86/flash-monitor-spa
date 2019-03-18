@@ -1,7 +1,7 @@
 import { FILTER_ITEM_TYPES } from './../../constants/filter-item-types';
 import { MonitorApiService } from './../../services/monitor-api.service';
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { Observable, Subject, merge } from 'rxjs';
+import { Observable, Subject, merge, of, from } from 'rxjs';
 import { NgbTypeahead, NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
 import {
   debounceTime,
@@ -68,6 +68,17 @@ export class SearchComponent implements OnInit {
   }
 
   search = (text$: Observable<string>) => {
+
+  // if input is empty - emit ''
+    text$.subscribe(
+      value => {
+        if (value === '') {
+          this.valueChange.emit({type: '', name: '', id: '', icon: ''});
+        }
+      }
+    );
+
+  // advise search stream
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
     const clicksWithClosedPopup$ = this.click$
       .pipe(
@@ -86,6 +97,7 @@ export class SearchComponent implements OnInit {
           return this.api.getFilterAdvise(term, this.catalogType);
         }),
       );
+
 
 
   }
