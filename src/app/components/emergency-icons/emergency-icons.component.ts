@@ -13,7 +13,7 @@ import { Component, OnInit, Input } from '@angular/core';
         </div>
     </div>
 
-  <p *ngIf="applications.length === 0">
+  <p *ngIf="applications?.length === 0">
     <ngb-alert [dismissible]="false" type="success" >
       Все приложения работают в штатном режиме.
     </ngb-alert>

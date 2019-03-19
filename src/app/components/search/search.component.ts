@@ -1,8 +1,8 @@
 import { FILTER_ITEM_TYPES } from './../../constants/filter-item-types';
 import { MonitorApiService } from './../../services/monitor-api.service';
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { Observable, Subject, merge, of, from } from 'rxjs';
-import { NgbTypeahead, NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, Subject, merge } from 'rxjs';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import {
   debounceTime,
   distinctUntilChanged,

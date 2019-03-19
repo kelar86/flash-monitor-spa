@@ -47,28 +47,40 @@ export class MonitorApiService {
   }
 
   getControls() {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', 'authorization':
+        'Basic cm9vdDpzZWNyZXRwYXNz'});
 
     return this.http.get(`http://${this.baseUrl}/controls/`, { headers: headers });
   }
 
   getUnits() {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', 'authorization':
+        'Basic cm9vdDpzZWNyZXRwYXNz' });
 
     return this.http.get(`http://${this.baseUrl}/units/`, { headers: headers });
   }
 
   getBodyTypes() {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', 'authorization':
+        'Basic cm9vdDpzZWNyZXRwYXNz' });
 
     return this.http.get(`http://${this.baseUrl}/body-types/`, { headers: headers });
   }
 
   getControlTypes() {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', 'authorization':
+        'Basic cm9vdDpzZWNyZXRwYXNz' });
 
     return this.http.get(`http://${this.baseUrl}/control-types/`, { headers: headers });
   }
 
+  postProblem(problem) {
+
+    return;
+  }
 
 }

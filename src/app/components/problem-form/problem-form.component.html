@@ -1,11 +1,12 @@
 <div class="modal-body">
-  <form class="problem-form">
+  <form class="problem-form" [formGroup]="problemForm">
+
     <h3>Заявить о проблеме</h3>
     <!-- DatePicker -->
     <div>
       <label> Дата и время
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" formControlName="detection_date">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
                 class="fa fa-calendar"></i></button>
@@ -16,34 +17,36 @@
     <!-- Приложение -->
     <div>
       <label>Приложение
-        <select class="form-control">
+        <select class="form-control" formControlName="application">
           <option>Приложение1</option>
         </select>
       </label>
     </div>
+   
+   
     <!-- Тип блока управления -->
     <div>
       <label>Тип блока управления
-        <textarea class="form-control" aria-label="Тип блока управления"></textarea>
+        <textarea class="form-control" aria-label="Тип блока управления" formControlName="control_type" ></textarea>
       </label>
     </div>
     <!-- Блоки управления -->
     <div>
       <label>Блоки управления
-        <textarea class="form-control" aria-label="Блоки управления"></textarea>
+        <textarea class="form-control" aria-label="Блоки управления" formControlName="control"></textarea>
       </label>
     </div>
     <!-- Агрегат -->
     <div>
       <label>Агрегат
-        <textarea class="form-control" aria-label="Агрегат"></textarea>
+        <textarea class="form-control" aria-label="Агрегат" formControlName="unit"></textarea>
       </label>
     </div>
 
     <!--Кузов -->
     <div>
       <label>Кузов
-        <textarea class="form-control" aria-label="Кузов"></textarea>
+        <textarea class="form-control" aria-label="Кузов" formControlName="body_type"></textarea>
       </label>
     </div>
     <!-- Описание проблемы -->
@@ -57,4 +60,6 @@
       <button class="btn btn-dark" (click)="activeModal.close('Close click')">Закрыть</button>
     </div>
   </form>
+  
+  <pre>{{problemForm.getRawValue() | json}}</pre>
 </div>

@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { MonitorApiService } from './services/monitor-api.service';
 import { map } from 'rxjs/operators';
 import { Observable, merge, Subject, of } from 'rxjs';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit {
   public isPlaned: Observable<Alert[]>;;
 
 
-  constructor(private api: MonitorApiService) {
+  constructor(private api: MonitorApiService, private storage: StorageService) {
   }
   public catalog: Catalog = new Catalog();
 

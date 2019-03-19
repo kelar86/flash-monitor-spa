@@ -1,3 +1,4 @@
+import { StorageService } from './services/storage.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,6 +15,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { DealerPanelComponent } from './components/dealer-panel/dealer-panel.component';
 import { AlertGridComponent } from './components/alert-grid/alert-grid.component';
 import { EmergencyIconsComponent } from './components/emergency-icons/emergency-icons.component';
+import { ProblemFormService } from './services/problem-form.service';
 
 
 @NgModule({
@@ -36,8 +38,13 @@ import { EmergencyIconsComponent } from './components/emergency-icons/emergency-
     AngularFontAwesomeModule
   ],
   entryComponents: [ProblemFormComponent],
-  providers: [MonitorApiService, HttpClient,
-    HttpClientModule],
+  providers: [
+    StorageService,
+    ProblemFormService, 
+    MonitorApiService, 
+    HttpClient,
+    HttpClientModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
