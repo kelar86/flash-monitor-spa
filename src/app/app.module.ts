@@ -14,7 +14,6 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { DealerPanelComponent } from './components/dealer-panel/dealer-panel.component';
 import { AlertGridComponent } from './components/alert-grid/alert-grid.component';
 import { EmergencyIconsComponent } from './components/emergency-icons/emergency-icons.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler/src/core';
 
 
 @NgModule({
@@ -39,9 +38,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler/src/core';
   entryComponents: [ProblemFormComponent],
   providers: [MonitorApiService, HttpClient,
     HttpClientModule],
-  bootstrap: [AppComponent],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -24,7 +24,7 @@ import {
   <div class="container">
 
     <input
-      aria-label="Поиск"
+      aria-label="Search"
       placeholder="Введите приложение, блок управления, агрегат, кузов..."
       type="text"
       class="form-control"
