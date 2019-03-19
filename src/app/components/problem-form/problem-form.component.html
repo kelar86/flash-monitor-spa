@@ -1,12 +1,18 @@
-<div class="modal-body">
-  <form class="problem-form" [formGroup]="problemForm">
 
-    <h3>Заявить о проблеме</h3>
+  <div class="modal-header">
+    <h4 class="modal-title">Заявить о проблеме</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+   
+  <div class="modal-body">
+    <form class="problem-form" >
     <!-- DatePicker -->
     <div>
       <label> Дата и время
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" formControlName="detection_date">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
                 class="fa fa-calendar"></i></button>
@@ -16,37 +22,49 @@
     </div>
     <!-- Приложение -->
     <div>
-      <label>Приложение
-        <select class="form-control" formControlName="application">
-          <option>Приложение1</option>
-        </select>
+      <label>Приложение 
+          <select hidden="true"></select>
+          <app-select-with-typeahead [searchList]="applications" [isMultiple]="false" (valueChange)="setApplication($event)">
+          </app-select-with-typeahead>
       </label>
     </div>
-   
+  
    
     <!-- Тип блока управления -->
-    <div>
+    <div *ngIf="hasControl()">
       <label>Тип блока управления
-        <textarea class="form-control" aria-label="Тип блока управления" formControlName="control_type" ></textarea>
+        <select class="form-control" [(ngModel)]="control_type">
+          <option *ngFor="let type of controlTypes" value="type.id">{{ type.type_name }}</option>
+        </select>
+        
       </label>
     </div>
     <!-- Блоки управления -->
-    <div>
+    <div *ngIf="hasControl()">
       <label>Блоки управления
-        <textarea class="form-control" aria-label="Блоки управления" formControlName="control"></textarea>
+        <select hidden="true"></select>
+        <app-select-with-typeahead [searchList]="controls" [isMultiple]="true"
+          (valueChange)="setCatalogAttribute($event, 'control')">
+        </app-select-with-typeahead>
       </label>
     </div>
     <!-- Агрегат -->
     <div>
       <label>Агрегат
-        <textarea class="form-control" aria-label="Агрегат" formControlName="unit"></textarea>
+        <select hidden="true"></select>
+        <app-select-with-typeahead [searchList]="units" [isMultiple]="true"
+          (valueChange)="setCatalogAttribute($event, 'unit')">
+        </app-select-with-typeahead>
       </label>
     </div>
 
     <!--Кузов -->
     <div>
       <label>Кузов
-        <textarea class="form-control" aria-label="Кузов" formControlName="body_type"></textarea>
+        <select hidden="true"></select>
+        <app-select-with-typeahead [searchList]="bodyTypes" [isMultiple]="true"
+          (valueChange)="setCatalogAttribute($event, 'body_type')">
+        </app-select-with-typeahead>
       </label>
     </div>
     <!-- Описание проблемы -->
@@ -59,7 +77,8 @@
       <button class="btn btn-dark" (click)="activeModal.close('Send click')">Отправить</button>
       <button class="btn btn-dark" (click)="activeModal.close('Close click')">Закрыть</button>
     </div>
+
+
   </form>
-  
-  <pre>{{problemForm.getRawValue() | json}}</pre>
+    {{ application | json}}
 </div>

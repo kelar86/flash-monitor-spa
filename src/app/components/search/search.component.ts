@@ -34,6 +34,7 @@ import {
       [resultTemplate]="rt"
       (focus)="focus$.next($event.target.value)"
       (selectItem)="onSelect($event)"
+      editable="false"
       #instance="ngbTypeahead"/>
 
    </div>

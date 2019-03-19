@@ -16,6 +16,8 @@ import { DealerPanelComponent } from './components/dealer-panel/dealer-panel.com
 import { AlertGridComponent } from './components/alert-grid/alert-grid.component';
 import { EmergencyIconsComponent } from './components/emergency-icons/emergency-icons.component';
 import { ProblemFormService } from './services/problem-form.service';
+import { AuthenticationModalComponent } from './components/authentication-modal/authentication-modal.component';
+import { SelectWithTypeaheadComponent } from './components/select-with-typeahead/select-with-typeahead.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { ProblemFormService } from './services/problem-form.service';
     ProblemFormComponent,
     DealerPanelComponent,
     AlertGridComponent,
-    EmergencyIconsComponent
+    EmergencyIconsComponent,
+    AuthenticationModalComponent,
+    SelectWithTypeaheadComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,7 @@ import { ProblemFormService } from './services/problem-form.service';
     ReactiveFormsModule,
     AngularFontAwesomeModule
   ],
-  entryComponents: [ProblemFormComponent],
+  entryComponents: [ProblemFormComponent, AuthenticationModalComponent],
   providers: [
     StorageService,
     ProblemFormService, 

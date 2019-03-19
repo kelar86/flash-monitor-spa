@@ -4,7 +4,7 @@ import { Control, Unit, BodyType } from './../../models/catalogs';
 import { ProblemFormService } from './../../services/problem-form.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 
 
 @Component({
@@ -14,13 +14,19 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class ProblemFormComponent implements OnInit {
 
-  public problemForm: FormGroup;
-
   private applications: Application[];
   private controls: Control[];
   private units: Unit[];
   private bodyTypes: BodyType[];
   private controlTypes: ControlType[];
+
+  private detection_date;
+  private application;
+  private control_type;
+  private control = [];
+  private unit = [];
+  private body_type = [];
+  private description;  
 
   private today = new Date;
 
@@ -37,22 +43,29 @@ export class ProblemFormComponent implements OnInit {
     this.problemFormService.bodyTypes$.subscribe(v => this.bodyTypes = v);
     this.problemFormService.controlTypes$.subscribe(v => this.controlTypes = v);
 
-
-    const defaultDate = {
+    this.detection_date = {
       year: this.today.getFullYear(),
       month: this.today.getMonth() + 1,
       day: this.today.getDate()
     };
 
-    this.problemForm = new FormGroup({
-      detection_date: new FormControl(defaultDate),
-      application: new FormControl(''),
-      control_type: new FormControl(''),
-      control: new FormControl(''),
-      unit: new FormControl(''),
-      body_type: new FormControl(''),
-      description: new FormControl('')
-    });
+
+  }
+
+  setCatalogAttribute(data, attribute) {
+    this['attribute'] = data.map(item => item.id);
+  }
+
+  setApplication(data) {
+    console.log(data[0]);
+    this.application = data[0];
+  }
+ 
+  hasControl(){
+    if (this.application){
+      return this.application.has_controls;
+    }
+    return true;
   }
 
 }
