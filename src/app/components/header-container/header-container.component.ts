@@ -18,6 +18,9 @@ import { ProblemFormComponent } from '../problem-form/problem-form.component';
         <div class="col">
           <app-clock></app-clock>
         </div>
+        <div class="col-1">
+        <p><a [routerLink]="['/login']">Выход</a></p>
+        </div>
        </div>
        <div class="row mt-2">
             <nav class="col-4">

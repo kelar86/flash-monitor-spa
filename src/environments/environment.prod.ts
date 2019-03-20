@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'django/api/v1'
+  apiBaseUrl: 'localhost:8000/api/v1'
 };

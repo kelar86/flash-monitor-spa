@@ -1,5 +1,5 @@
 import { StorageService } from './services/storage.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,6 +19,13 @@ import { ProblemFormService } from './services/problem-form.service';
 import { AuthenticationModalComponent } from './components/authentication-modal/authentication-modal.component';
 import { SelectWithTypeaheadComponent } from './components/select-with-typeahead/select-with-typeahead.component';
 
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { APP_ROUTES } from './app.routes';
+import { RouterModule } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +38,11 @@ import { SelectWithTypeaheadComponent } from './components/select-with-typeahead
     AlertGridComponent,
     EmergencyIconsComponent,
     AuthenticationModalComponent,
-    SelectWithTypeaheadComponent
+    SelectWithTypeaheadComponent,
+    DashboardComponent,
+    LoginPageComponent,
+
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -39,15 +50,17 @@ import { SelectWithTypeaheadComponent } from './components/select-with-typeahead
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    RouterModule.forRoot(APP_ROUTES)
   ],
   entryComponents: [ProblemFormComponent, AuthenticationModalComponent],
   providers: [
     StorageService,
-    ProblemFormService, 
-    MonitorApiService, 
+    ProblemFormService,
+    MonitorApiService,
     HttpClient,
-    HttpClientModule
+    HttpClientModule,
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

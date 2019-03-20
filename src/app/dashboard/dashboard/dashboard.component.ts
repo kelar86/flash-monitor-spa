@@ -1,20 +1,17 @@
-import { AuthenticationModalComponent } from './components/authentication-modal/authentication-modal.component';
-import { ProblemFormComponent } from './components/problem-form/problem-form.component';
-import { AlertList, Alert } from './models/alert';
-import { Application, CrashedApp } from './models/application';
-import { Catalog } from './models/catalogs';
 import { Component, OnInit } from '@angular/core';
-import { MonitorApiService } from './services/monitor-api.service';
+import { Observable, of } from 'rxjs';
+import { AlertList, Alert } from 'src/app/models/alert';
+import { Application, CrashedApp } from 'src/app/models/application';
+
+import { MonitorApiService } from 'src/app/services/monitor-api.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { Catalog } from 'src/app/models/catalogs';
 import { map } from 'rxjs/operators';
-import { Observable, merge, Subject, of } from 'rxjs';
-import { StorageService } from './services/storage.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-dashboard',
   template: `
-   <router-outlet></router-outlet>
- <!-- <div class="container">
+    <div class="container">
     <app-header-container
         [catalog]="catalog"
         (filterChange)="applyFilter($event)">
@@ -25,16 +22,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
         [byControl]="byControl"
         [isPlaned]="isPlaned"
         [applications]="applications"
-       >
+      >
     </app-dealer-panel>
-  </div>
-  -->
-`,
-  styleUrls: ['./app.component.css']
+</div>
+  `,
+  styles: []
 })
-
-
-export class AppComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 
   public alerts: Observable<AlertList>;
   public applications: Observable<Application[]>;
@@ -44,7 +38,7 @@ export class AppComponent implements OnInit {
   public isPlaned: Observable<Alert[]>;
 
 
-  constructor(private api: MonitorApiService, private storage: StorageService, private modalService: NgbModal) {
+  constructor(private api: MonitorApiService, private storage: StorageService) {
   }
   public catalog: Catalog = new Catalog();
 
