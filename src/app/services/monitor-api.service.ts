@@ -2,6 +2,7 @@ import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Problem } from '../models/problem';
 
 
 @Injectable({
@@ -13,10 +14,10 @@ export class MonitorApiService {
 
   constructor(private http: HttpClient) { }
 
-  getProblems() {
+  getProblems(user) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
-      .get(`http://${this.baseUrl}/problems/`, { headers: headers });
+      .get(`http://${this.baseUrl}/problems/?author=${user.id}`, { headers: headers });
   }
 
   getAlerts(filter) {
@@ -63,15 +64,23 @@ export class MonitorApiService {
   }
 
   getControlTypes() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({'Content-Type': 'application/json' });
 
     return this.http.get(`http://${this.baseUrl}/control-types/`, { headers: headers });
   }
 
-  postProblem(problem) {
+  getUser() {
+    const headers = new HttpHeaders({'Content-Type': 'application/json' });
 
-    return;
+    return this.http.get(`http://${this.baseUrl}/rest-auth/user/`, { headers: headers });
+  }
+
+  postProblem(problem: Problem) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json' });
+
+    const body = problem.serialize();
+
+    return this.http.post(`http://${this.baseUrl}/problems/`, body,  { headers: headers });
   }
 
 }

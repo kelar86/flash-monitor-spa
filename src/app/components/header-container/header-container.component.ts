@@ -23,10 +23,13 @@ import { ProblemFormComponent } from '../problem-form/problem-form.component';
         </div>
        </div>
        <div class="row mt-2">
-            <nav class="col-4">
+            <nav class="col-2">
               <button class="btn btn-dark" (click)="open()"> + Проблема </button>
             </nav>
-            <div class="col-8">
+            <nav class="col-3">
+              <button *ngIf="" type="button" class="btn btn-link">Статусы проблем</button>
+            </nav>
+            <div class="col-7">
               <app-search (valueChange)="getFilterOption($event)" [catalogType]="catalog.type()"></app-search>
             </div>
         </div>

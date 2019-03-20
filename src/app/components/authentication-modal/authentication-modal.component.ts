@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   template: `
 
     <div class="modal-body">
-
+    <h3>Войти Flash monitor</h3>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label for="username">Имя пользователя:</label>

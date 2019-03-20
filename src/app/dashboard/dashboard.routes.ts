@@ -6,9 +6,5 @@ export const dashboardRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    // children: [
-    //   { path: '', redirectTo: 'home', pathMatch: 'full' },
-    //   { path: 'home', component: DashboardComponent},
-    // ]
   }
 ];

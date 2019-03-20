@@ -18,20 +18,20 @@ const noop = () => { };
     }
   ],
   template: `
-  
+
     <ng-template #rt let-r="result" let-t="term">
     <!--  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1" style="width: 16px"> -->
       <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
     </ng-template>
 
-    <div>  
-      <input 
+    <div>
+      <input
         #input
         #instance="ngbTypeahead"
-        id="typeahead-basic" 
-        type="text" 
-        class="form-control" 
-        [(ngModel)]="model" 
+        id="typeahead-basic"
+        type="text"
+        class="form-control"
+        [(ngModel)]="model"
         [ngbTypeahead]="search"
         [resultTemplate]="rt"
         [inputFormatter]="formatter"
@@ -42,10 +42,10 @@ const noop = () => { };
         placeholder="Добавить"
         />
     </div>
-    <div> 
+    <div>
       <p *ngFor="let item of selectedItems">{{ item.name }} {{item.type_name}} <span type="button" (click)="removeItem(item.id)">[X]</span></p>
-    </div> 
-  
+    </div>
+
   `,
   styles: []
 })
@@ -74,19 +74,18 @@ export class SelectWithTypeaheadComponent implements OnInit {
     this.valueChange.emit(this.selectedItems);
   }
 
-  
   onSelect($event, input) {
     $event.preventDefault();
-    if (!this.selectedItems.includes(($event.item))){ 
+    if (!this.selectedItems.includes(($event.item))){
       this.selectedItems.push($event.item)
     }
 
     if (!this.isMultiple) {
       this.selectedItems = [$event.item];
     }
-    
+
     this.valueChange.emit(this.selectedItems);
-    input.value = '';   
+    input.value = '';
   }
 
 

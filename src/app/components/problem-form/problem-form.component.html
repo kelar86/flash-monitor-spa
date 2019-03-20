@@ -5,14 +5,14 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-   
+
   <div class="modal-body">
     <form class="problem-form" >
     <!-- DatePicker -->
     <div>
       <label> Дата и время
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date" name="date">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
                 class="fa fa-calendar"></i></button>
@@ -22,21 +22,21 @@
     </div>
     <!-- Приложение -->
     <div>
-      <label>Приложение 
+      <label>Приложение
           <select hidden="true"></select>
           <app-select-with-typeahead [searchList]="applications" [isMultiple]="false" (valueChange)="setApplication($event)">
           </app-select-with-typeahead>
       </label>
     </div>
-  
-   
+
+
     <!-- Тип блока управления -->
     <div *ngIf="hasControl()">
       <label>Тип блока управления
-        <select class="form-control" [(ngModel)]="control_type">
+        <select class="form-control" [(ngModel)]="control_type" name="control-type">
           <option *ngFor="let type of controlTypes" value="type.id">{{ type.type_name }}</option>
         </select>
-        
+
       </label>
     </div>
     <!-- Блоки управления -->
@@ -70,15 +70,15 @@
     <!-- Описание проблемы -->
     <div>
       <label>Описание проблемы
-        <textarea class="form-control" aria-label="Описание проблемы"></textarea>
+        <textarea class="form-control" aria-label="Описание проблемы" [(ngModel)]="description" name="description"></textarea>
       </label>
     </div>
     <div>
-      <button class="btn btn-dark" (click)="activeModal.close('Send click')">Отправить</button>
-      <button class="btn btn-dark" (click)="activeModal.close('Close click')">Закрыть</button>
+      <button class="btn btn-dark" (click)="saveAndSendForm(); activeModal.close('Send click')">Отправить</button>
+      <button class="btn btn-dark" (click)="saveTempForm(); activeModal.close('Close click')">Закрыть</button>
     </div>
 
 
   </form>
-    {{ application | json}}
+    <!-- {{ application | json}} -->
 </div>
