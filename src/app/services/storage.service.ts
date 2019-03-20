@@ -60,7 +60,7 @@ export class StorageService {
   }
 
   getUserProblems(user) {
-    return this.api.getProblems(user).pipe(map(resp => new User().deserialize(resp)));
+    return this.api.getProblems(user).pipe(map(resp => (<Array<any>>resp).map(item => new Problem().deserialize(item))));
   }
 
   saveProblem(problem) {
