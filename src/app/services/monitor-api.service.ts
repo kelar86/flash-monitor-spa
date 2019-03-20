@@ -14,23 +14,20 @@ export class MonitorApiService {
   constructor(private http: HttpClient) { }
 
   getProblems() {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization':
-    'Basic cm9vdDpzZWNyZXRwYXNz' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
       .get(`http://${this.baseUrl}/problems/`, { headers: headers });
   }
 
   getAlerts(filter) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization':
-    'Basic cm9vdDpzZWNyZXRwYXNz' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
       .get(`http://${this.baseUrl}/alerts/?search=${filter}`, { headers: headers });
   }
 
   getFilterAdvise(query, catalogType) {
 
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization':
-    'Basic cm9vdDpzZWNyZXRwYXNz' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     if (query === '' && catalogType === 'ALL') {
       return this.http.get(`http://${this.baseUrl}/top-problems`, { headers: headers });
@@ -40,40 +37,34 @@ export class MonitorApiService {
   }
 
   getApplications() {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'authorization':
-    'Basic cm9vdDpzZWNyZXRwYXNz' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.get(`http://${this.baseUrl}/applications/`, { headers: headers });
   }
 
   getControls() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json', 'authorization':
-        'Basic cm9vdDpzZWNyZXRwYXNz'});
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.get(`http://${this.baseUrl}/controls/`, { headers: headers });
   }
 
   getUnits() {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json', 'authorization':
-        'Basic cm9vdDpzZWNyZXRwYXNz' });
+      'Content-Type': 'application/json' });
 
     return this.http.get(`http://${this.baseUrl}/units/`, { headers: headers });
   }
 
   getBodyTypes() {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json', 'authorization':
-        'Basic cm9vdDpzZWNyZXRwYXNz' });
+      'Content-Type': 'application/json' });
 
     return this.http.get(`http://${this.baseUrl}/body-types/`, { headers: headers });
   }
 
   getControlTypes() {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json', 'authorization':
-        'Basic cm9vdDpzZWNyZXRwYXNz' });
+      'Content-Type': 'application/json' });
 
     return this.http.get(`http://${this.baseUrl}/control-types/`, { headers: headers });
   }
