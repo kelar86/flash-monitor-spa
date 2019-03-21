@@ -47,7 +47,8 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
         </tr>
       </tbody>
     </table>
-    <p *ngIf="alert?.length === 0">
+   
+    <p *ngIf="alerts?.length === 0">
       <ngb-alert [dismissible]="false" type="success" >
         Активные алерты в данной категории отсутствуют.
       </ngb-alert>
