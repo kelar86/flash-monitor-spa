@@ -16,10 +16,10 @@ import {
   selector: 'app-search',
   template: `
 
-  <ng-template #rt let-r="result" let-t="term">
+  <ng-template #rt let-r="result" let-t="term" >
      <img [src]="r['icon']" class="mr-2"  alt="image">
      <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
-  </ng-template>
+   </ng-template>
 
   <div class="container">
 
@@ -35,17 +35,22 @@ import {
       (focus)="focus$.next($event.target.value)"
       (selectItem)="onSelect($event)"
       editable="false"
-      #instance="ngbTypeahead"/>
+      #instance="ngbTypeahead"
+      />
 
    </div>
 
   `,
   styles: [`
     img {
-      width: 20px
+      width: 20px;
     }
     input {
-      width: 100%
+      width: 100%;
+    }
+    .dropdown-menu.show {
+      background-color:red;
+      width: 300px;
     }
   `]
 })
