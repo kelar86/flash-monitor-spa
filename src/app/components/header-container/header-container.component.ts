@@ -2,6 +2,7 @@ import { Catalog } from './../../models/catalogs';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProblemFormComponent } from '../problem-form/problem-form.component';
+import { Problem } from 'src/app/models/problem';
 
 @Component({
   selector: 'app-header-container',
@@ -27,7 +28,7 @@ import { ProblemFormComponent } from '../problem-form/problem-form.component';
               <button class="btn btn-dark" (click)="open()"> + Проблема </button>
             </nav>
             <nav class="col-3">
-              <button *ngIf="" type="button" class="btn btn-link">Статусы проблем</button>
+              <button *ngIf="problems" type="button" class="btn btn-link">Статусы проблем</button>
             </nav>
             <div class="col-7">
               <app-search (valueChange)="getFilterOption($event)" [catalogType]="catalog.type()"></app-search>
@@ -41,7 +42,9 @@ import { ProblemFormComponent } from '../problem-form/problem-form.component';
 export class HeaderContainerComponent implements OnInit {
 
   @Input() catalog: Catalog;
+  @Input() problems: Problem[];
   @Output() filterChange = new EventEmitter();
+
 
   constructor(private modalService: NgbModal) { }
 

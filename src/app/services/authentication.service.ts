@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -9,7 +9,8 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
     login(username: string, password: string) {
-        return this.http.post<any>(`http://${environment.apiBaseUrl}/rest-auth/login/`, { username, password })
+        const headers = new HttpHeaders({'Content-Type': 'application/json' });
+        return this.http.post<any>(`http://${environment.apiBaseUrl}/rest-auth/login/`, { username, password }, {headers: headers})
             .pipe(map(user => {
                 // login successful if there's a user in the response
                 if (user) {
