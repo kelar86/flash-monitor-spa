@@ -86,6 +86,9 @@ export class AuthenticationModalComponent implements OnInit {
               },
               error => {
                   this.error = error;
+                  if (error.status === 400) {
+                      this.error = 'Не верное имя пользователя или пароль'
+                  }
                   this.loading = false;
               });
   }
