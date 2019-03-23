@@ -33,8 +33,8 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
           <td>
           {{alert.start_date | date:"d.MM.yy HH:mm" }}
           </td>
-          <td>
-          {{alert.finish_date | date:"d.MM.yy HH:mm" }}
+          <td style.color="{{ isExpiered(alert.finish_date) ? 'red' : '' }}">
+           {{alert.finish_date | date:"d.MM.yy HH:mm" }}
           </td>
           <td>
             <span *ngIf="alert.unit.length > 0 ||
@@ -69,10 +69,15 @@ export class AlertGridComponent implements OnInit {
 
   @Input() alerts: Alert[];
 
+  private today = new Date().getTime();
   constructor() { }
 
   ngOnInit() {
 
+  }
+
+  isExpiered(date) {
+    return Date.parse(date) < this.today;
   }
 
   // Check that all alerts are 'by control' category.
