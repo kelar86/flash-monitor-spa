@@ -7,6 +7,8 @@ import { MonitorApiService } from 'src/app/services/monitor-api.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Catalog } from 'src/app/models/catalogs';
 import { map, takeUntil } from 'rxjs/operators';
+import { Problem } from 'src/app/models/problem';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +16,7 @@ import { map, takeUntil } from 'rxjs/operators';
     <div class="container">
     <app-header-container
         [catalog]="catalog"
+        [problems]="problems"
         (filterChange)="applyFilter($event)">
     </app-header-container>
 
@@ -39,11 +42,13 @@ export class DashboardComponent implements OnInit {
 
 
   public applications: Observable<Application[]>;
+  public problems: Problem[];
 
   public byApplication: Observable<Alert[]>;
   public byControl: Observable<Alert[]>;
   public isPlaned: Observable<Alert[]>;
 
+  public user: User;
 
   constructor(private api: MonitorApiService, private storage: StorageService) {
   }
