@@ -9,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
     <div class="application-container" *ngIf="applications">
       <div class="app" *ngFor="let application of applications"
           [style.background-color]= "application.alert_category === 'CONTROL_ALERT' ? 'yellow' : 'red'" >
-            <img class="float-center" src="{{application.icon}}" alt="{{application.name}}">
+            <img class="float-center app__img" src="{{application.icon}}" alt="{{application.name}}">
         </div>
     </div>
 

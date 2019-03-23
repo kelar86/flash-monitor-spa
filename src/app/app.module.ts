@@ -1,7 +1,7 @@
 import { StorageService } from './services/storage.service';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -25,7 +25,10 @@ import { APP_ROUTES } from './app.routes';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
+import { registerLocaleData } from '@angular/common';
+import ru from '@angular/common/locales/ru';
 
+registerLocaleData(ru);
 
 @NgModule({
   declarations: [
@@ -61,6 +64,7 @@ import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
     HttpClient,
     HttpClientModule,
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: "ru" }
   ],
   bootstrap: [AppComponent]
 })

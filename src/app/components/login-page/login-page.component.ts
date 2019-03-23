@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-login-page',
-  template: ` `,
+  template: `<app-dashboard></app-dashboard> `,
   styles: []
 })
 export class LoginPageComponent implements OnInit {

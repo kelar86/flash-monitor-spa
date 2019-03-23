@@ -14,21 +14,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-root',
   template: `
    <router-outlet></router-outlet>
- <!-- <div class="container">
-    <app-header-container
-        [catalog]="catalog"
-        (filterChange)="applyFilter($event)">
-    </app-header-container>
-
-    <app-dealer-panel
-        [byApplication]="byApplication"
-        [byControl]="byControl"
-        [isPlaned]="isPlaned"
-        [applications]="applications"
-       >
-    </app-dealer-panel>
-  </div>
-  -->
 `,
   styleUrls: ['./app.component.css']
 })
@@ -49,7 +34,6 @@ export class AppComponent implements OnInit {
   public catalog: Catalog = new Catalog();
 
   ngOnInit() {
-
 
 
     // TODO: DRY!  MOVE IT TO A SERVICE. AND HAS MANY HTTP

@@ -1,14 +1,16 @@
+import { NgbDateCustomParserFormatter } from './../../shared/ngb-date-custom-formatter';
 import { ControlType } from './../../models/control-type';
 import { Application } from './../../models/application';
 import { Control, Unit, BodyType } from './../../models/catalogs';
 import { ProblemFormService } from './../../services/problem-form.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Problem } from 'src/app/models/problem';
 
 
 
 @Component({
+  providers: [{ provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }],
   selector: 'app-problem-form',
   templateUrl: './problem-form.component.html',
   styleUrls: ['./problem-form.component.css']

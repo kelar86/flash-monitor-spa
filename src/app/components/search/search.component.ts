@@ -1,6 +1,6 @@
 import { FILTER_ITEM_TYPES } from './../../constants/filter-item-types';
 import { MonitorApiService } from './../../services/monitor-api.service';
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
 import { Observable, Subject, merge } from 'rxjs';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -41,17 +41,14 @@ import {
    </div>
 
   `,
-  styles: [`
+  styles: [`  
     img {
       width: 20px;
     }
-    input {
+    ::ng-deep .dropdown-menu {
       width: 100%;
     }
-    .dropdown-menu.show {
-      background-color:red;
-      width: 300px;
-    }
+   
   `]
 })
 export class SearchComponent implements OnInit {

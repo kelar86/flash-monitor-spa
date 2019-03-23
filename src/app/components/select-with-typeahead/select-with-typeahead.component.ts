@@ -47,7 +47,11 @@ const noop = () => { };
     </div>
 
   `,
-  styles: []
+  styles: [`
+   ::ng-deep .dropdown-menu {
+      width: 300px;
+    }
+    `]
 })
 export class SelectWithTypeaheadComponent implements OnInit {
 
