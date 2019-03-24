@@ -25,7 +25,7 @@
       <label>Приложение
           <select hidden="true"></select>
           <app-select-with-typeahead 
-          [searchList]="applications" 
+          [searchList]="(storage.getApplications() | async)" 
           [isMultiple]="false" 
           [(ngModel)]="application" 
           name="application" 
@@ -39,17 +39,17 @@
     <div *ngIf="hasControl()">
       <label>Тип блока управления
         <select class="form-control" [(ngModel)]="control_type" name="control-type">
-          <option *ngFor="let type of controlTypes" value="{{type.id}}">{{ type.type_name }}</option>
+          <option *ngFor="let type of (storage.getControlTypes() | async)" value="{{type.id}}">{{ type.type_name }}</option>
         </select>
-
       </label>
     </div>
+
     <!-- Блоки управления -->
     <div *ngIf="hasControl()">
       <label>Блоки управления
         <select hidden="true"></select>
         <app-select-with-typeahead 
-          [searchList]="controls" 
+          [searchList]="(storage.getControls() | async)" 
           [isMultiple]="true"
           [(ngModel)]="control" 
           name="control" >
@@ -61,7 +61,7 @@
       <label>Агрегат
         <select hidden="true"></select>
         <app-select-with-typeahead 
-        [searchList]="units" 
+        [searchList]="(storage.getUnits() | async)" 
         [isMultiple]="true"
         [(ngModel)]="unit" 
         name="unit" >
@@ -74,7 +74,7 @@
       <label>Кузов
         <select hidden="true"></select>
         <app-select-with-typeahead 
-          [searchList]="bodyTypes" 
+          [searchList]="(storage.getBodyTypes() | async)" 
           [isMultiple]="true"
           [(ngModel)]="body_type" 
           name="body_type" >

@@ -17,16 +17,7 @@ import { Problem } from 'src/app/models/problem';
 })
 export class ProblemFormComponent implements OnInit, OnDestroy {
 
-  private loading = false;
-  private submitted = false;
-
   private problem: Problem;
-
-  private applications: Application[];
-  private controls: Control[];
-  private units: Unit[];
-  private bodyTypes: BodyType[];
-  private controlTypes: ControlType[];
 
   private detection_date;
   private application = [];
@@ -50,16 +41,22 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.subscribtions = [
-        this.storage.getApplications().subscribe(v => this.applications = v),
-        this.storage.getControls().subscribe(v => this.controls = v),
-        this.storage.getUnits().subscribe(v => this.units = v),
-        this.storage.getBodyTypes().subscribe(v => this.bodyTypes = v),
-        this.storage.getControlTypes().subscribe(v => this.controlTypes = v),
         this.storage.getCurrentUser().subscribe(v => this.user = v),
-        this.storage.getTempProblem().subscribe(v => this.problem = v)
+
+        // Try to match problem from the state
+        this.storage.getTempProblem().subscribe(v => {
+          this.problem = v;
+          this.detection_date = v.detection_date;
+          this.application = v.application ? [v.application] : [];
+          this.control_type;
+          this.control = v.control ? v.control : [];
+          this.unit = v.unit ? v.unit : [];
+          this.body_type = v.body_type ? v.body_type : [];
+          this.description = v.description;
+        })
         
     ];
-    this.detection_date = {
+    this.detection_date = this.detection_date ? this.detection_date : {
       year: this.today.getFullYear(),
       month: this.today.getMonth() + 1,
       day: this.today.getDate()
@@ -78,7 +75,7 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
   deserializeForm() {
     this.problem = new Problem().deserialize({
-      application: this.application,
+      application: this.application[0],
       detection_date: this.detection_date,
       control_type: this.control_type,
       control: this.control,
@@ -91,11 +88,14 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
   saveForm() {
     this.deserializeForm();
-    this.activeModal.close(this.problem);
+    this.activeModal.close(
+      this.storage.postProblem(this.problem)
+    );
   }
 
   cancelForm() {
     this.deserializeForm();
+    this.storage.saveTempProblem(this.problem);
     this.activeModal.dismiss(this.problem);
   }
 
