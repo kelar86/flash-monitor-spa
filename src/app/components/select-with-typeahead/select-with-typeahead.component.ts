@@ -42,7 +42,9 @@ const noop = () => { };
         placeholder="Добавить"
         />
 
-      <span class="selected-item" *ngFor="let item of selectedItems">{{ item.name }} {{item.type_name}} <span type="button" (click)="removeItem(item.id)">[X]</span></span>
+      <span class="selected-item" *ngFor="let item of selectedItems">{{ item.name }} {{item.type_name}} 
+          <span (click)="removeItem(item.id)"><i class="fa fa-close"></i></span>
+      </span>
     </div>
     <div>
       
@@ -66,6 +68,9 @@ const noop = () => { };
       border:none; 
       background: transparent; 
       outline: 0;
+    }
+    .fa.fa-close {
+      cursor: pointer;
     }
     `]
 })
