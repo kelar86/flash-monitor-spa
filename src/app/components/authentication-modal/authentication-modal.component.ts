@@ -1,3 +1,4 @@
+import { StorageService } from './../../services/storage.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { first } from 'rxjs/operators';
@@ -50,7 +51,8 @@ export class AuthenticationModalComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService,
-      private activeModal: NgbActiveModal) {}
+      private activeModal: NgbActiveModal,
+      private storage: StorageService) {}
 
   ngOnInit() {
       this.loginForm = this.formBuilder.group({
@@ -81,21 +83,17 @@ export class AuthenticationModalComponent implements OnInit {
           .pipe(first())
           .subscribe(
               data => {
+                  this.storage.setCurrentUser();
                   this.router.navigate([this.returnUrl]);
                   this.activeModal.close('');
               },
               error => {
                   this.error = error;
                   if (error.status === 400) {
-<<<<<<< HEAD
                       this.error = "Не верное имя пользователя или пароль."
                   }
 
 
-=======
-                      this.error = 'Не верное имя пользователя или пароль'
-                  }
->>>>>>> 398ac0f2465f7e4dc8a140cde2e9e6188b8ac52d
                   this.loading = false;
               });
   }

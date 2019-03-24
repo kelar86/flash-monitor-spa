@@ -19,7 +19,6 @@ export class ProblemFormService {
   public units$: Observable<Unit[]>;
   public bodyTypes$: Observable<BodyType[]>;
   public controlTypes$: Observable<ControlType[]>;
-  public user$: Observable<User>;
 
   constructor(private storageService: StorageService) {
     this.applications$ = this.storageService.getApplications();
@@ -27,7 +26,6 @@ export class ProblemFormService {
     this.units$ = this.storageService.getUnits();
     this.bodyTypes$ = this.storageService.getBodyTypes();
     this.controlTypes$ = this.storageService.getControlTypes();
-    this.user$ = this.storageService.getCurrentUser();
    }
 
 

@@ -1,16 +1,14 @@
 import { Application } from './../../models/application';
-import { AlertList } from './../../models/alert';
 import { Alert } from '../../models/alert';
 import { Component, OnInit, Input } from '@angular/core';
-import { map, filter, merge } from 'rxjs/operators';
-import { Observable, pipe, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 
 @Component({
   selector: 'app-dealer-panel',
   template: `
     
-    <app-emergency-icons 
+   <app-emergency-icons 
       [applications]="(applications | async)"
       ></app-emergency-icons>
     

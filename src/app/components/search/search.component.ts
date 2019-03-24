@@ -21,7 +21,7 @@ import {
      <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
    </ng-template>
 
-  <div class="container">
+  <div class="container-fluid">
 
     <input
       aria-label="Search"

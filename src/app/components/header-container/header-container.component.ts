@@ -3,12 +3,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProblemFormComponent } from '../problem-form/problem-form.component';
 import { Problem } from 'src/app/models/problem';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-header-container',
   template: `
-    <header>
-      <div class="container header">
+    <div class="container-fluid header">  
        <div class="row">
         <div class="col">
           ЛОГОТИП
@@ -19,12 +19,13 @@ import { Problem } from 'src/app/models/problem';
         <div class="col">
           <app-clock></app-clock>
         </div>
-        <div class="col-1">
-        <p><a [routerLink]="['/login']">Выход</a></p>
+        <div class="col d-none d-md-block">
+         <span >Пользователь: {{user.username}}</span>
+         <span class="float-right"> <a [routerLink]="['/login']">Выход</a></span>
         </div>
        </div>
-       <div class="row mt-2">
-            <nav class="col-2">
+       <div class="row">
+            <nav class="col-2 ">
               <button class="btn btn-dark" (click)="open()"> + Проблема </button>
             </nav>
             <nav class="col-3">
@@ -34,13 +35,13 @@ import { Problem } from 'src/app/models/problem';
               <app-search (valueChange)="getFilterOption($event)" [catalogType]="catalog.type()"></app-search>
             </div>
         </div>
-      </div>
-    </header>
+    </div>
   `,
   styleUrls: [`./header-container.component.css`]
 })
 export class HeaderContainerComponent implements OnInit {
 
+  @Input() user: User;
   @Input() catalog: Catalog;
   @Input() problems: Problem[];
   @Output() filterChange = new EventEmitter();
@@ -56,7 +57,7 @@ export class HeaderContainerComponent implements OnInit {
   }
 
   open() {
-    const modalReference = this.modalService.open(ProblemFormComponent);
+    const modalReference = this.modalService.open(ProblemFormComponent, {size:'lg'});
 
     modalReference.result.then((result) => {
       console.log(result);

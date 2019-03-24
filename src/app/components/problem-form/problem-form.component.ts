@@ -1,3 +1,4 @@
+import { StorageService } from './../../services/storage.service';
 import { NgbDateCustomParserFormatter } from './../../shared/ngb-date-custom-formatter';
 import { ControlType } from './../../models/control-type';
 import { Application } from './../../models/application';
@@ -41,7 +42,8 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private problemFormService: ProblemFormService
+    private problemFormService: ProblemFormService,
+    private storage: StorageService
   ) { }
 
   ngOnInit() {
@@ -52,7 +54,11 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
         this.problemFormService.units$.subscribe(v => this.units = v),
         this.problemFormService.bodyTypes$.subscribe(v => this.bodyTypes = v),
         this.problemFormService.controlTypes$.subscribe(v => this.controlTypes = v),
-        this.problemFormService.user$.subscribe(v => this.user = v),
+        this.storage.getCurrentUser().subscribe(v => {
+          
+          this.user = v;
+          console.log(this.user);
+        }),
     ];
     this.detection_date = {
       year: this.today.getFullYear(),
@@ -97,8 +103,8 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
       control: this.control,
       unit: this.unit,
       body_type: this.body_type,
-      description: this.description
-
+      description: this.description,
+      author: this.user
     });
 
     console.log( this.problem);

@@ -4,7 +4,7 @@ import { MonitorApiService } from './monitor-api.service';
 import { ControlType } from './../models/control-type';
 import { Control, Unit, BodyType } from './../models/catalogs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Problem } from '../models/problem';
@@ -23,7 +23,13 @@ export class StorageService {
 
   public userProblems$: Observable<Problem[]>;
 
-  public user$: Observable<User>;
+  public _user$: BehaviorSubject<User> = new BehaviorSubject(new User());
+  // public user$: Observable<User>;
+
+
+  private dataStore: {
+    user: User
+  };
 
   constructor(private api: MonitorApiService) {
 
@@ -34,9 +40,11 @@ export class StorageService {
     this.bodyTypes$ = this.api.getBodyTypes().pipe(map(resp => (<Array<any>>resp).map(item => new BodyType().deserialize(item))));
     this.controlTypes$ = this.api.getControlTypes().pipe(map(resp => (<Array<any>>resp).map(item => new ControlType().deserialize(item))));
 
-    this.user$ = this.api.getUser().pipe(map(resp => new User().deserialize(resp)));
-
-
+    this.dataStore = {
+      user: new User(),
+    };
+    
+    this.setCurrentUser();
   }
 
   getApplications() {
@@ -56,7 +64,18 @@ export class StorageService {
   }
 
   getCurrentUser() {
-    return this.user$;
+    console.log(this.dataStore.user);
+    return this._user$.asObservable();
+  }
+
+  setCurrentUser() {
+    this.api.getUser().pipe(map(resp => new User().deserialize(resp)))
+      .subscribe(v => {
+        console.log(v);
+        this.dataStore.user = v;
+        this._user$.next(this.dataStore.user); 
+        console.log(this.dataStore.user);
+      });
   }
 
   getUserProblems(user) {

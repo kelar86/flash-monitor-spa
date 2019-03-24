@@ -13,21 +13,22 @@ import { User } from 'src/app/models/user';
 @Component({
   selector: 'app-dashboard',
   template: `
-    <div class="container">
-    <app-header-container
-        [catalog]="catalog"
-        [problems]="problems"
-        (filterChange)="applyFilter($event)">
-    </app-header-container>
+    <div class="container-fluid">
+      <app-header-container
+          [user]="user"
+          [catalog]="catalog"
+          [problems]="problems"
+          (filterChange)="applyFilter($event)">
+      </app-header-container>
 
-    <app-dealer-panel
-        [byApplication]="byApplication"
-        [byControl]="byControl"
-        [isPlaned]="isPlaned"
-        [applications]="applications"
-      >
-    </app-dealer-panel>
-</div>
+      <app-dealer-panel
+          [byApplication]="byApplication"
+          [byControl]="byControl"
+          [isPlaned]="isPlaned"
+          [applications]="applications"
+        >
+      </app-dealer-panel>
+    </div>
   `,
   styles: []
 })
@@ -51,6 +52,9 @@ export class DashboardComponent implements OnInit {
   public user: User;
 
   constructor(private api: MonitorApiService, private storage: StorageService) {
+    this.storage.getCurrentUser()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(value => this.user = value);
   }
   public catalog: Catalog = new Catalog();
 

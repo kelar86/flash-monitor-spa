@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-emergency-icons',
   template: `
-  <div class="container">
+  <div class="container-fluid">
     <div class="application-container" *ngIf="applications">
       <div class="app" *ngFor="let application of applications"
           [style.background-color]= "application.alert_category === 'CONTROL_ALERT' ? 'yellow' : 'red'" >
@@ -34,6 +34,7 @@ import { Component, OnInit, Input } from '@angular/core';
       align-items: center;
       grid-gap: 1rem;
       height: 60px;
+      margin-top: 1rem;
     }
     .app {
       display: grid;

@@ -26,6 +26,7 @@ export class Problem implements Deserializable, Serializable {
         this.control = input.control.map(i => new Control().deserialize(i));
         this.unit = input.unit.map(i => new Unit().deserialize(i));
         this.body_type = input.body_type.map(i => new BodyType().deserialize(i));
+        this.author = new User().deserialize(input.author);
 
         return this;
     }
