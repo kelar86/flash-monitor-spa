@@ -24,11 +24,12 @@ export class StorageService {
   public userProblems$: Observable<Problem[]>;
 
   public _user$: BehaviorSubject<User> = new BehaviorSubject(new User());
-  // public user$: Observable<User>;
+  public _problem$: BehaviorSubject<Problem> = new BehaviorSubject(new Problem());
 
 
   private dataStore: {
-    user: User
+    user: User,
+    problem: Problem
   };
 
   constructor(private api: MonitorApiService) {
@@ -42,6 +43,7 @@ export class StorageService {
 
     this.dataStore = {
       user: new User(),
+      problem: new Problem()
     };
     
     this.setCurrentUser();
@@ -64,17 +66,14 @@ export class StorageService {
   }
 
   getCurrentUser() {
-    console.log(this.dataStore.user);
     return this._user$.asObservable();
   }
 
   setCurrentUser() {
     this.api.getUser().pipe(map(resp => new User().deserialize(resp)))
       .subscribe(v => {
-        console.log(v);
         this.dataStore.user = v;
         this._user$.next(this.dataStore.user); 
-        console.log(this.dataStore.user);
       });
   }
 
@@ -82,7 +81,16 @@ export class StorageService {
     return this.api.getProblems(user).pipe(map(resp => (<Array<any>>resp).map(item => new Problem().deserialize(item))));
   }
 
-  saveProblem(problem) {
+  getTempProblem() {
+    return this._problem$.asObservable();
+  }
+
+  saveTempProblem(problem) {
+    this.dataStore.problem = problem;
+    this._problem$.next(problem);
+  }
+
+  postProblem(problem) {
     return this.api.postProblem(problem);
   }
 

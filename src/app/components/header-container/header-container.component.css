@@ -1,4 +1,7 @@
 .header {
     background: grey;
-    padding-bottom: 1rem;
+    padding: 1rem 1rem;
+}
+.menu-row {
+    margin-top: 1rem;
 }

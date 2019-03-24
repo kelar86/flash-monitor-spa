@@ -1,18 +1,18 @@
 
   <div class="modal-header">
     <h4 class="modal-title">Заявить о проблеме</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="cancelForm()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
   <div class="modal-body">
-    <form class="problem-form" >
+    <form class="problem-form" #form="ngForm">
     <!-- DatePicker -->
     <div>
       <label> Дата и время
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date" name="date">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date" name="date" required>
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
                 class="fa fa-calendar"></i></button>
@@ -24,7 +24,12 @@
     <div>
       <label>Приложение
           <select hidden="true"></select>
-          <app-select-with-typeahead [searchList]="applications" [isMultiple]="false" (valueChange)="setApplication($event)">
+          <app-select-with-typeahead 
+          [searchList]="applications" 
+          [isMultiple]="false" 
+          [(ngModel)]="application" 
+          name="application" 
+          required>
           </app-select-with-typeahead>
       </label>
     </div>
@@ -34,7 +39,7 @@
     <div *ngIf="hasControl()">
       <label>Тип блока управления
         <select class="form-control" [(ngModel)]="control_type" name="control-type">
-          <option *ngFor="let type of controlTypes" value="type.id">{{ type.type_name }}</option>
+          <option *ngFor="let type of controlTypes" value="{{type.id}}">{{ type.type_name }}</option>
         </select>
 
       </label>
@@ -43,8 +48,11 @@
     <div *ngIf="hasControl()">
       <label>Блоки управления
         <select hidden="true"></select>
-        <app-select-with-typeahead [searchList]="controls" [isMultiple]="true"
-          (valueChange)="setCatalogAttribute($event, 'control')">
+        <app-select-with-typeahead 
+          [searchList]="controls" 
+          [isMultiple]="true"
+          [(ngModel)]="control" 
+          name="control" >
         </app-select-with-typeahead>
       </label>
     </div>
@@ -52,8 +60,11 @@
     <div>
       <label>Агрегат
         <select hidden="true"></select>
-        <app-select-with-typeahead [searchList]="units" [isMultiple]="true"
-          (valueChange)="setCatalogAttribute($event, 'unit')">
+        <app-select-with-typeahead 
+        [searchList]="units" 
+        [isMultiple]="true"
+        [(ngModel)]="unit" 
+        name="unit" >
         </app-select-with-typeahead>
       </label>
     </div>
@@ -62,8 +73,11 @@
     <div>
       <label>Кузов
         <select hidden="true"></select>
-        <app-select-with-typeahead [searchList]="bodyTypes" [isMultiple]="true"
-          (valueChange)="setCatalogAttribute($event, 'body_type')">
+        <app-select-with-typeahead 
+          [searchList]="bodyTypes" 
+          [isMultiple]="true"
+          [(ngModel)]="body_type" 
+          name="body_type" >
         </app-select-with-typeahead>
       </label>
     </div>
@@ -74,11 +88,13 @@
       </label>
     </div>
     <div>
-      <button class="btn btn-dark" (click)="saveAndSendForm(); activeModal.close('Send click')">Отправить</button>
-      <button class="btn btn-dark" (click)="saveTempForm(); activeModal.close('Close click')">Закрыть</button>
+      <button class="btn btn-dark" (click)="saveForm()">Отправить</button>
+      <button class="btn btn-dark" (click)="cancelForm()">Закрыть</button>
     </div>
 
 
   </form>
-    <!-- {{ application | json}} -->
+    <!-- {{ form.value | json}}
+    {{form.valid}} -->
+
 </div>

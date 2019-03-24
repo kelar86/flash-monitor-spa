@@ -3,7 +3,6 @@ import { NgbDateCustomParserFormatter } from './../../shared/ngb-date-custom-for
 import { ControlType } from './../../models/control-type';
 import { Application } from './../../models/application';
 import { Control, Unit, BodyType } from './../../models/catalogs';
-import { ProblemFormService } from './../../services/problem-form.service';
 import { NgbActiveModal, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Problem } from 'src/app/models/problem';
@@ -18,6 +17,9 @@ import { Problem } from 'src/app/models/problem';
 })
 export class ProblemFormComponent implements OnInit, OnDestroy {
 
+  private loading = false;
+  private submitted = false;
+
   private problem: Problem;
 
   private applications: Application[];
@@ -27,7 +29,7 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
   private controlTypes: ControlType[];
 
   private detection_date;
-  private application;
+  private application = [];
   private control_type;
   private control = [];
   private unit = [];
@@ -42,23 +44,20 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private problemFormService: ProblemFormService,
     private storage: StorageService
   ) { }
 
   ngOnInit() {
 
     this.subscribtions = [
-        this.problemFormService.applications$.subscribe(v => this.applications = v),
-        this.problemFormService.controls$.subscribe(v => this.controls = v),
-        this.problemFormService.units$.subscribe(v => this.units = v),
-        this.problemFormService.bodyTypes$.subscribe(v => this.bodyTypes = v),
-        this.problemFormService.controlTypes$.subscribe(v => this.controlTypes = v),
-        this.storage.getCurrentUser().subscribe(v => {
-          
-          this.user = v;
-          console.log(this.user);
-        }),
+        this.storage.getApplications().subscribe(v => this.applications = v),
+        this.storage.getControls().subscribe(v => this.controls = v),
+        this.storage.getUnits().subscribe(v => this.units = v),
+        this.storage.getBodyTypes().subscribe(v => this.bodyTypes = v),
+        this.storage.getControlTypes().subscribe(v => this.controlTypes = v),
+        this.storage.getCurrentUser().subscribe(v => this.user = v),
+        this.storage.getTempProblem().subscribe(v => this.problem = v)
+        
     ];
     this.detection_date = {
       year: this.today.getFullYear(),
@@ -68,32 +67,14 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
   }
 
-  setCatalogAttribute(data, attribute) {
-    this[attribute] = data.map(item => item);
-    console.log(data);
-  }
-
-  setApplication(data) {
-    console.log(data[0]);
-    this.application = data[0];
-  }
 
   hasControl() {
-    if (this.application) {
-      return this.application.has_controls;
+    if (this.application[0]) {
+      return this.application[0].has_controls;
     }
     return true;
   }
 
-  saveAndSendForm() {
-    this.deserializeForm();
-    this.problemFormService.saveAndSendProblem(this.problem);
-  }
-
-  saveTempForm() {
-    this.deserializeForm();
-    this.problemFormService.saveProblem(this.problem);
-  }
 
   deserializeForm() {
     this.problem = new Problem().deserialize({
@@ -106,8 +87,16 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
       description: this.description,
       author: this.user
     });
+  }
 
-    console.log( this.problem);
+  saveForm() {
+    this.deserializeForm();
+    this.activeModal.close(this.problem);
+  }
+
+  cancelForm() {
+    this.deserializeForm();
+    this.activeModal.dismiss(this.problem);
   }
 
   ngOnDestroy() {

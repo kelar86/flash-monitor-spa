@@ -18,9 +18,8 @@ const noop = () => { };
     }
   ],
   template: `
-
     <ng-template #rt let-r="result" let-t="term">
-    <!--  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1" style="width: 16px"> -->
+      <img [src]="r['icon']" class="mr-2"  alt="image" style="width: 16px">
       <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
     </ng-template>
 
@@ -53,7 +52,7 @@ const noop = () => { };
     }
     `]
 })
-export class SelectWithTypeaheadComponent implements OnInit {
+export class SelectWithTypeaheadComponent implements OnInit, ControlValueAccessor {
 
   @Input() isMultiple;
   @Input() searchList;
@@ -76,6 +75,7 @@ export class SelectWithTypeaheadComponent implements OnInit {
   removeItem(id) {
     this.selectedItems = this.selectedItems.filter( item => item.id !== id);
     this.valueChange.emit(this.selectedItems);
+    this.writeValue(this.selectedItems);
   }
 
   onSelect($event, input) {
@@ -90,6 +90,8 @@ export class SelectWithTypeaheadComponent implements OnInit {
 
     this.valueChange.emit(this.selectedItems);
     input.value = '';
+
+    this.writeValue(this.selectedItems);
   }
 
 
@@ -106,4 +108,20 @@ export class SelectWithTypeaheadComponent implements OnInit {
 
   formatter = (x: { name: string }) => x.name;
 
+
+  writeValue(value: any) {
+    if (value !== undefined) {
+      this.selectedItems = value;
+    }
+    this.onChange(this.selectedItems);
+  }
+
+  onChange = (_: any) => { };
+
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched() { }
+  
 }

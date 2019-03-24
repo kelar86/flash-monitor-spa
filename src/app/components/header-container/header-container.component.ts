@@ -24,7 +24,7 @@ import { User } from 'src/app/models/user';
          <span class="float-right"> <a [routerLink]="['/login']">Выход</a></span>
         </div>
        </div>
-       <div class="row">
+       <div class="row menu-row">
             <nav class="col-2 ">
               <button class="btn btn-dark" (click)="open()"> + Проблема </button>
             </nav>

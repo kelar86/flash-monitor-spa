@@ -15,7 +15,6 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { DealerPanelComponent } from './components/dealer-panel/dealer-panel.component';
 import { AlertGridComponent } from './components/alert-grid/alert-grid.component';
 import { EmergencyIconsComponent } from './components/emergency-icons/emergency-icons.component';
-import { ProblemFormService } from './services/problem-form.service';
 import { AuthenticationModalComponent } from './components/authentication-modal/authentication-modal.component';
 import { SelectWithTypeaheadComponent } from './components/select-with-typeahead/select-with-typeahead.component';
 
@@ -59,7 +58,6 @@ registerLocaleData(ru);
   entryComponents: [ProblemFormComponent, AuthenticationModalComponent],
   providers: [
     StorageService,
-    ProblemFormService,
     MonitorApiService,
     HttpClient,
     HttpClientModule,
