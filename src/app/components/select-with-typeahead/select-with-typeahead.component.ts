@@ -23,13 +23,14 @@ const noop = () => { };
       <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
     </ng-template>
 
-    <div>
+   
+    <div class="form-control typehead" >
       <input
         #input
         #instance="ngbTypeahead"
         id="typeahead-basic"
         type="text"
-        class="form-control"
+        class="typehead__input"
         [(ngModel)]="model"
         [ngbTypeahead]="search"
         [resultTemplate]="rt"
@@ -40,15 +41,31 @@ const noop = () => { };
         editable="false"
         placeholder="Добавить"
         />
+
+      <span class="selected-item" *ngFor="let item of selectedItems">{{ item.name }} {{item.type_name}} <span type="button" (click)="removeItem(item.id)">[X]</span></span>
     </div>
     <div>
-      <p *ngFor="let item of selectedItems">{{ item.name }} {{item.type_name}} <span type="button" (click)="removeItem(item.id)">[X]</span></p>
+      
     </div>
 
   `,
   styles: [`
    ::ng-deep .dropdown-menu {
       width: 300px;
+    }
+
+    .selected-item {
+      margin: 0.5em;
+    }
+    .typehead {
+      height:80px
+    }
+    .typehead__input {
+      display: block;
+      width: 100%;
+      border:none; 
+      background: transparent; 
+      outline: 0;
     }
     `]
 })
