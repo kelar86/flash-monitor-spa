@@ -1,8 +1,5 @@
 import { StorageService } from './../../services/storage.service';
 import { NgbDateCustomParserFormatter } from './../../shared/ngb-date-custom-formatter';
-import { ControlType } from './../../models/control-type';
-import { Application } from './../../models/application';
-import { Control, Unit, BodyType } from './../../models/catalogs';
 import { NgbActiveModal, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Problem } from 'src/app/models/problem';
@@ -16,6 +13,8 @@ import { Problem } from 'src/app/models/problem';
   styleUrls: ['./problem-form.component.css']
 })
 export class ProblemFormComponent implements OnInit, OnDestroy {
+
+  private error;
 
   private problem: Problem;
 
@@ -47,7 +46,7 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
         this.storage.getTempProblem().subscribe(v => {
           this.problem = v;
           this.detection_date = v.detection_date;
-          this.application = v.application ? [v.application] : [];
+          this.application = v.application && v.application.id ? [v.application] : [];
           this.control_type;
           this.control = v.control ? v.control : [];
           this.unit = v.unit ? v.unit : [];
@@ -88,9 +87,10 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
   saveForm() {
     this.deserializeForm();
-    this.activeModal.close(
-      this.storage.postProblem(this.problem)
-    );
+    this.storage.postProblem(this.problem)
+    .subscribe(
+      result => this.activeModal.close(result),
+      error => this.error = error.error);
   }
 
   cancelForm() {

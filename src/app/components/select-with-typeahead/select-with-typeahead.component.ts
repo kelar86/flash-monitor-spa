@@ -57,7 +57,6 @@ export class SelectWithTypeaheadComponent implements OnInit, ControlValueAccesso
   @Input() isMultiple;
   @Input() searchList;
   @Input() placeholder;
-  @Output() valueChange = new EventEmitter;
 
   private model;
   private selectedItems = [];
@@ -74,7 +73,6 @@ export class SelectWithTypeaheadComponent implements OnInit, ControlValueAccesso
 
   removeItem(id) {
     this.selectedItems = this.selectedItems.filter( item => item.id !== id);
-    this.valueChange.emit(this.selectedItems);
     this.writeValue(this.selectedItems);
   }
 
@@ -88,8 +86,9 @@ export class SelectWithTypeaheadComponent implements OnInit, ControlValueAccesso
       this.selectedItems = [$event.item];
     }
 
-    this.valueChange.emit(this.selectedItems);
-    input.value = '';
+    if ( this.isMultiple && $event.item.name === 'Выбрать все') {
+      this.selectedItems = this.searchList;
+    }
 
     this.writeValue(this.selectedItems);
   }
@@ -101,7 +100,8 @@ export class SelectWithTypeaheadComponent implements OnInit, ControlValueAccesso
     const inputFocus$ = this.focus$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => (term === '' ? this.searchList
+      map(term => (term === '' ? 
+        (this.isMultiple ? [{ name: 'Выбрать все', icon: '' } , ...this.searchList] : this.searchList)
         : this.searchList.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
   }
@@ -112,7 +112,7 @@ export class SelectWithTypeaheadComponent implements OnInit, ControlValueAccesso
   writeValue(value: any) {
     if (value !== undefined) {
       this.selectedItems = value;
-    }
+    }    
     this.onChange(this.selectedItems);
   }
 

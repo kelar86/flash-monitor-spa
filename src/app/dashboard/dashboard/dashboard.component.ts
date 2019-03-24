@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, BehaviorSubject, timer, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { AlertList, Alert } from 'src/app/models/alert';
 import { Application, CrashedApp } from 'src/app/models/application';
-
 import { MonitorApiService } from 'src/app/services/monitor-api.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Catalog } from 'src/app/models/catalogs';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, mergeMap, first } from 'rxjs/operators';
 import { Problem } from 'src/app/models/problem';
 import { User } from 'src/app/models/user';
 
@@ -41,7 +40,6 @@ export class DashboardComponent implements OnInit {
 
   private interval;
 
-
   public applications: Observable<Application[]>;
   public problems: Problem[];
 
@@ -61,9 +59,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
    this.interval = setInterval(() => {
-      this.api.getAlerts(this.filter).pipe(map(item => new AlertList(item)),
-      takeUntil(this.destroy$))
-      .subscribe(v => this.alerts.next(v));
+      this.api.getAlerts(this.filter).pipe(
+        map(item => new AlertList(item)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(v => {
+        this.alerts.next(v);
+        // FIXME INNER SUBSCRIBTION
+        this.storage.getUserProblems(this.user).pipe(first()).subscribe(v => this.problems = v);      
+      });
     }, 500);
   
 

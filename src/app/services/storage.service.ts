@@ -47,6 +47,7 @@ export class StorageService {
     };
     
     this.setCurrentUser();
+
   }
 
   getApplications() {

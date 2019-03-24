@@ -1,3 +1,12 @@
-button {
-    margin: 0 20px 0 0;
+button.form-button {
+    margin: 20px 20px 0 0;
 }
+
+
+.input-label.required:after {
+    color: #d00;
+    content: "*";
+    position: relative;
+    margin-left: 5px;
+    top: -3px;
+  }

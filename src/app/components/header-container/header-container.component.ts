@@ -57,12 +57,12 @@ export class HeaderContainerComponent implements OnInit {
   }
 
   open() {
-    const modalReference = this.modalService.open(ProblemFormComponent, { backdrop: 'static', keyboard: false, size:'lg'});
+    const modalReference = this.modalService.open(ProblemFormComponent, { backdrop: 'static', keyboard: false, size: 'lg'});
 
     modalReference.result.then((result) => {
 
       console.log(result);
-      result.subscribe(value => console.log(value))
+      // result.subscribe(value => console.log(value))
 
       modalReference.close();
     }, (reason) => {

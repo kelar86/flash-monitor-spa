@@ -7,94 +7,97 @@
   </div>
 
   <div class="modal-body">
+    <div *ngIf="error" class="alert alert-danger">{{error | json}}</div>
     <form class="problem-form" #form="ngForm">
     <!-- DatePicker -->
     <div>
-      <label> Дата и время
-        <div class="input-group">
+      <label for="detection_date" class="input-label required"> Дата и время </label>
+        <div class="input-group" id="detection_date">
           <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date" name="date" required>
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
                 class="fa fa-calendar"></i></button>
           </div>
         </div>
-      </label>
     </div>
     <!-- Приложение -->
     <div>
-      <label>Приложение
+      <label for="applications" class="input-label required">Приложение</label>
           <select hidden="true"></select>
-          <app-select-with-typeahead 
+          <app-select-with-typeahead
+          id="applications" 
           [searchList]="(storage.getApplications() | async)" 
           [isMultiple]="false" 
           [(ngModel)]="application" 
           name="application" 
           required>
           </app-select-with-typeahead>
-      </label>
+     
     </div>
 
 
     <!-- Тип блока управления -->
     <div *ngIf="hasControl()">
-      <label>Тип блока управления
-        <select class="form-control" [(ngModel)]="control_type" name="control-type">
+      <label for="control_type">Тип блока управления</label>
+        <select id="control_type" class="form-control" [(ngModel)]="control_type" name="control-type">
+          <option></option>
           <option *ngFor="let type of (storage.getControlTypes() | async)" value="{{type.id}}">{{ type.type_name }}</option>
         </select>
-      </label>
     </div>
 
     <!-- Блоки управления -->
     <div *ngIf="hasControl()">
-      <label>Блоки управления
+      <label for="control" >Блоки управления</label>
         <select hidden="true"></select>
-        <app-select-with-typeahead 
+        <app-select-with-typeahead
+          id="control" 
           [searchList]="(storage.getControls() | async)" 
           [isMultiple]="true"
           [(ngModel)]="control" 
           name="control" >
         </app-select-with-typeahead>
-      </label>
+      
     </div>
     <!-- Агрегат -->
     <div>
-      <label>Агрегат
+      <label for="unit">Агрегат</label>
         <select hidden="true"></select>
-        <app-select-with-typeahead 
+        <app-select-with-typeahead
+        id="unit" 
         [searchList]="(storage.getUnits() | async)" 
         [isMultiple]="true"
         [(ngModel)]="unit" 
         name="unit" >
         </app-select-with-typeahead>
-      </label>
+      
     </div>
 
     <!--Кузов -->
     <div>
-      <label>Кузов
+      <label for="body-type">Кузов</label>
         <select hidden="true"></select>
-        <app-select-with-typeahead 
+        <app-select-with-typeahead
+          id="body-type" 
           [searchList]="(storage.getBodyTypes() | async)" 
           [isMultiple]="true"
           [(ngModel)]="body_type" 
           name="body_type" >
         </app-select-with-typeahead>
-      </label>
+      
     </div>
     <!-- Описание проблемы -->
     <div>
-      <label>Описание проблемы
-        <textarea class="form-control" aria-label="Описание проблемы" [(ngModel)]="description" name="description"></textarea>
-      </label>
+      <label for="description">Описание проблемы</label>
+        <textarea id="description" class="form-control" aria-label="Описание проблемы" [(ngModel)]="description" name="description"></textarea>
     </div>
     <div>
-      <button class="btn btn-dark" (click)="saveForm()">Отправить</button>
-      <button class="btn btn-dark" (click)="cancelForm()">Закрыть</button>
+      <button class="btn btn-dark form-button" (click)="saveForm()" [disabled]="form.invalid">Отправить</button>
+      <button class="btn btn-dark form-button" (click)="cancelForm()">Закрыть</button>
     </div>
 
 
   </form>
-    <!-- {{ form.value | json}}
-    {{form.valid}} -->
+    {{ form.value | json}}
+    {{form.valid}}
 
 </div>
