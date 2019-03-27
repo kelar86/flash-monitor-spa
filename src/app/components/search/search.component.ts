@@ -41,14 +41,14 @@ import {
    </div>
 
   `,
-  styles: [`  
+  styles: [`
     img {
       width: 20px;
     }
     ::ng-deep .dropdown-menu {
       width: 100%;
     }
-   
+
   `]
 })
 export class SearchComponent implements OnInit {
@@ -58,13 +58,13 @@ export class SearchComponent implements OnInit {
 
   search_result;
 
-  constructor(private api: MonitorApiService) { }
-
-  ngOnInit() { }
-
   @ViewChild('instance') instance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
+
+  constructor(private api: MonitorApiService) { }
+
+  ngOnInit() { }
 
   onSelect(ev) {
     this.valueChange.emit(ev.item);

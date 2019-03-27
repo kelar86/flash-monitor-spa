@@ -47,13 +47,12 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
           this.problem = v;
           this.detection_date = v.detection_date;
           this.application = v.application && v.application.id ? [v.application] : [];
-          this.control_type;
+          this.control_type = '';
           this.control = v.control ? v.control : [];
           this.unit = v.unit ? v.unit : [];
           this.body_type = v.body_type ? v.body_type : [];
           this.description = v.description;
         })
-        
     ];
     this.detection_date = this.detection_date ? this.detection_date : {
       year: this.today.getFullYear(),

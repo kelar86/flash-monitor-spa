@@ -83,7 +83,7 @@ export class AuthenticationModalComponent implements OnInit {
           .pipe(first())
           .subscribe(
               data => {
-                  this.storage.setCurrentUser();
+                  this.storage.loadUser();
                   this.router.navigate([this.returnUrl]);
                   this.activeModal.close('');
               },

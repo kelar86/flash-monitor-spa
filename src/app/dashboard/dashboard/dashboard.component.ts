@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { AlertList, Alert } from 'src/app/models/alert';
 import { Application, CrashedApp } from 'src/app/models/application';
@@ -31,7 +31,7 @@ import { User } from 'src/app/models/user';
   `,
   styles: []
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   public alerts = new Subject<any>();
   public destroy$ = new Subject<any>();
@@ -49,7 +49,10 @@ export class DashboardComponent implements OnInit {
 
   public user: User;
 
-  constructor(private api: MonitorApiService, private storage: StorageService) {
+  constructor(
+      private api: MonitorApiService,
+      private storage: StorageService
+    ) {
     this.storage.getCurrentUser()
     .pipe(takeUntil(this.destroy$))
     .subscribe(value => this.user = value);
@@ -66,19 +69,19 @@ export class DashboardComponent implements OnInit {
       .subscribe(v => {
         this.alerts.next(v);
         // FIXME INNER SUBSCRIBTION
-        this.storage.getUserProblems(this.user).pipe(first()).subscribe(v => this.problems = v);      
+        this.storage.getUserProblems(this.user).pipe(first()).subscribe(v => this.problems = v);
       });
-    }, 500);
-  
+    }, 3000);
 
-   
+
+
     this.alerts.subscribe(value => {
       this.byApplication = of(value).pipe(
         map(list => list.getAlertsByApplicationCategory()),
         takeUntil(this.destroy$));
 
       this.byControl = of(value).pipe(
-        map(list => list.getAlertsByControlCategory()), 
+        map(list => list.getAlertsByControlCategory()),
         takeUntil(this.destroy$));
 
       this.isPlaned = of(value).pipe(
@@ -114,7 +117,7 @@ export class DashboardComponent implements OnInit {
     this.filter = data.name;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.destroy$.next('destroy');
     if (this.interval) {
       clearInterval(this.interval);

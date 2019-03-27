@@ -25,51 +25,51 @@
       <label for="applications" class="input-label required">Приложение</label>
           <select hidden="true"></select>
           <app-select-with-typeahead
-          id="applications" 
-          [searchList]="(storage.getApplications() | async)" 
-          [isMultiple]="false" 
-          [(ngModel)]="application" 
-          name="application" 
+          id="applications"
+          [searchList]="(storage.getApplications() | async)"
+          [isMultiple]="false"
+          [(ngModel)]="application"
+          name="application"
           required>
           </app-select-with-typeahead>
-     
+
     </div>
 
 
     <!-- Тип блока управления -->
-    <div *ngIf="hasControl()">
+    <!-- <div *ngIf="hasControl()">
       <label for="control_type">Тип блока управления</label>
         <select id="control_type" class="form-control" [(ngModel)]="control_type" name="control-type">
           <option></option>
           <option *ngFor="let type of (storage.getControlTypes() | async)" value="{{type.id}}">{{ type.type_name }}</option>
         </select>
-    </div>
+    </div> -->
 
     <!-- Блоки управления -->
     <div *ngIf="hasControl()">
       <label for="control" >Блоки управления</label>
         <select hidden="true"></select>
         <app-select-with-typeahead
-          id="control" 
-          [searchList]="(storage.getControls() | async)" 
+          id="control"
+          [searchList]="(storage.getControls() | async)"
           [isMultiple]="true"
-          [(ngModel)]="control" 
+          [(ngModel)]="control"
           name="control" >
         </app-select-with-typeahead>
-      
+
     </div>
     <!-- Агрегат -->
     <div>
       <label for="unit">Агрегат</label>
         <select hidden="true"></select>
         <app-select-with-typeahead
-        id="unit" 
-        [searchList]="(storage.getUnits() | async)" 
+        id="unit"
+        [searchList]="(storage.getUnits() | async)"
         [isMultiple]="true"
-        [(ngModel)]="unit" 
+        [(ngModel)]="unit"
         name="unit" >
         </app-select-with-typeahead>
-      
+
     </div>
 
     <!--Кузов -->
@@ -77,13 +77,13 @@
       <label for="body-type">Кузов</label>
         <select hidden="true"></select>
         <app-select-with-typeahead
-          id="body-type" 
-          [searchList]="(storage.getBodyTypes() | async)" 
+          id="body-type"
+          [searchList]="(storage.getBodyTypes() | async)"
           [isMultiple]="true"
-          [(ngModel)]="body_type" 
+          [(ngModel)]="body_type"
           name="body_type" >
         </app-select-with-typeahead>
-      
+
     </div>
     <!-- Описание проблемы -->
     <div>

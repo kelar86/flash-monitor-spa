@@ -26,6 +26,7 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
+import { ErrorInterceptor } from './helpers/error.interceptor';
 
 registerLocaleData(ru);
 
@@ -62,7 +63,8 @@ registerLocaleData(ru);
     HttpClient,
     HttpClientModule,
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
-    { provide: LOCALE_ID, useValue: "ru" }
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'ru' }
   ],
   bootstrap: [AppComponent]
 })
