@@ -19,7 +19,7 @@ import { User } from 'src/app/models/user';
           [problems]="problems"
           (filterChange)="applyFilter($event)">
       </app-header-container>
-
+      
       <app-dealer-panel
           [byApplication]="byApplication"
           [byControl]="byControl"
@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // FIXME INNER SUBSCRIBTION
         this.storage.getUserProblems(this.user).pipe(first()).subscribe(v => this.problems = v);
       });
-    }, 3000);
+    }, 250);
 
 
 

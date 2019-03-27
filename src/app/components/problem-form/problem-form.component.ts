@@ -1,3 +1,4 @@
+import { Application } from './../../models/application';
 import { StorageService } from './../../services/storage.service';
 import { NgbDateCustomParserFormatter } from './../../shared/ngb-date-custom-formatter';
 import { NgbActiveModal, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -19,12 +20,14 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
   private problem: Problem;
 
   detection_date;
-  application = [];
+  application: Application;
   control_type;
   control = [];
   unit = [];
   body_type = [];
   description;
+
+  applications;
 
   private user;
 
@@ -35,7 +38,10 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
   constructor(
     public activeModal: NgbActiveModal,
     public storage: StorageService
-  ) { }
+  ) {
+
+    this.storage.getApplications().subscribe( v => this.applications = v);
+   }
 
   ngOnInit() {
 
@@ -44,9 +50,10 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
         // Try to match problem from the state
         this.storage.getTempProblem().subscribe(v => {
+          console.log(v.application);
           this.problem = v;
           this.detection_date = v.detection_date;
-          this.application = v.application && v.application.id ? [v.application] : [];
+          this.application = v.application ? v.application : this.applications[0];
           this.control_type = '';
           this.control = v.control ? v.control : [];
           this.unit = v.unit ? v.unit : [];
@@ -64,8 +71,8 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
 
   hasControl() {
-    if (this.application[0]) {
-      return this.application[0].has_controls;
+    if (this.application) {
+      return this.application.has_controls;
     }
     return true;
   }
@@ -73,7 +80,7 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
   deserializeForm() {
     this.problem = new Problem().deserialize({
-      application: this.application[0],
+      application: this.application,
       detection_date: this.detection_date,
       control_type: this.control_type,
       control: this.control,
@@ -102,4 +109,7 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
     this.subscribtions.map(subscribtion => subscribtion.unsubscribe());
   }
 
+  compareFn(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
 }
