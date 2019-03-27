@@ -42,9 +42,13 @@ const noop = () => { };
         placeholder="Добавить"
         />
 
-      <span class="selected-item" *ngFor="let item of selectedItems">{{ item.name }} {{item.type_name}} 
-          <span (click)="removeItem(item.id)"><i class="fa fa-close"></i></span>
+      <span class="selected-item" *ngFor="let item of selectedItems">
+         <img [src]="item.icon" class="mr-2"  alt="image" style="width: 16px">
+        {{ item.name }} {{item.type_name}} 
+        <span (click)="removeItem(item.id)"><i class="fa fa-close"></i></span>
+      {{item | json}}
       </span>
+      
     </div>
     <div>
       

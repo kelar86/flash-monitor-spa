@@ -10,3 +10,7 @@ button.form-button {
     margin-left: 5px;
     top: -3px;
   }
+
+label {
+    margin-top: 1em;
+}

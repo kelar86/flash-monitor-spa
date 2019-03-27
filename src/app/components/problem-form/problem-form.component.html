@@ -23,19 +23,15 @@
     <!-- Приложение -->
     <div>
       <label for="applications" class="input-label required">Приложение</label>
-          <select hidden="true"></select>
-          <app-select-with-typeahead
-          id="applications"
-          [searchList]="(storage.getApplications() | async)"
-          [isMultiple]="false"
-          [(ngModel)]="application"
-          name="application"
-          required>
-          </app-select-with-typeahead>
-
+      <select  id="applications" class="form-control" [(ngModel)]="application" name="control-type" [compareWith]="compareFn">
+        <option *ngFor="let app of applications" [ngValue]="app" >
+          {{ app.name }}
+        </option>
+      </select>
     </div>
 
-
+    <!--Фильтр убран из шаблона, т.к пока не реализована фильтрация. -->
+    <!-- Нужен ли фильтр вообще, если для блоков управления реализован поиск?-->
     <!-- Тип блока управления -->
     <!-- <div *ngIf="hasControl()">
       <label for="control_type">Тип блока управления</label>
