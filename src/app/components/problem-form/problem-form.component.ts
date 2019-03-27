@@ -14,17 +14,17 @@ import { Problem } from 'src/app/models/problem';
 })
 export class ProblemFormComponent implements OnInit, OnDestroy {
 
-  private error;
+  error;
 
   private problem: Problem;
 
-  private detection_date;
-  private application = [];
-  private control_type;
-  private control = [];
-  private unit = [];
-  private body_type = [];
-  private description;
+  detection_date;
+  application = [];
+  control_type;
+  control = [];
+  unit = [];
+  body_type = [];
+  description;
 
   private user;
 
@@ -34,7 +34,7 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private storage: StorageService
+    public storage: StorageService
   ) { }
 
   ngOnInit() {

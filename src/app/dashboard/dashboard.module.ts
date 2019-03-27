@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { dashboardRoutes } from './dashboard.routes';
 
@@ -10,7 +9,7 @@ import { dashboardRoutes } from './dashboard.routes';
     CommonModule,
     RouterModule.forChild(dashboardRoutes)
   ],
-  declarations: [DashboardComponent]
+  declarations: []
 })
 
 export class DashboardModule { }

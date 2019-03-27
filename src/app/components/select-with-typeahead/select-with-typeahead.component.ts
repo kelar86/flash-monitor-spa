@@ -80,8 +80,8 @@ export class SelectWithTypeaheadComponent implements OnInit, ControlValueAccesso
   @Input() searchList;
   @Input() placeholder;
 
-  private model;
-  private selectedItems = [];
+  model;
+  selectedItems = [];
 
   constructor() { }
 
