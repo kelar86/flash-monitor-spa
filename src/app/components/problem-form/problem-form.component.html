@@ -11,7 +11,8 @@
     <form class="problem-form" #form="ngForm">
     <!-- DatePicker -->
     <div>
-      <label for="detection_date" class="input-label required"> Дата </label>
+      <label for="detection_date" class="input-label required"> Дата и время </label>
+     
         <div class="input-group" id="detection_date">
           <input class="form-control" placeholder="dd.mm.yyyy" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date" name="date" required>
           <div class="input-group-append">
@@ -19,10 +20,13 @@
                 class="fa fa-calendar"></i></button>
           </div>
         </div>
+      
+      <ngb-timepicker [(ngModel)]="time" name="time"></ngb-timepicker>
+     
     </div>
 
-    <!-- <ngb-timepicker [(ngModel)]="time"  name="time"></ngb-timepicker>
-    {{time | json}} -->
+      
+   
     <!-- Приложение -->
     <div>
       <label for="applications" class="input-label required">Приложение</label>
