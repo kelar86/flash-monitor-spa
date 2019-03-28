@@ -1,25 +1,28 @@
 
-  <div class="modal-header">
+  <div *ngIf="!sendComplete" class="modal-header">
     <h4 class="modal-title">Заявить о проблеме</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancelForm()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
-  <div class="modal-body">
+  <div *ngIf="!sendComplete" class="modal-body">
     <div *ngIf="error" class="alert alert-danger">{{error | json}}</div>
     <form class="problem-form" #form="ngForm">
     <!-- DatePicker -->
     <div>
-      <label for="detection_date" class="input-label required"> Дата и время </label>
+      <label for="detection_date" class="input-label required"> Дата </label>
         <div class="input-group" id="detection_date">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date" name="date" required>
+          <input class="form-control" placeholder="dd.mm.yyyy" name="dp" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="detection_date" name="date" required>
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
                 class="fa fa-calendar"></i></button>
           </div>
         </div>
     </div>
+
+    <!-- <ngb-timepicker [(ngModel)]="time"  name="time"></ngb-timepicker>
+    {{time | json}} -->
     <!-- Приложение -->
     <div>
       <label for="applications" class="input-label required">Приложение</label>
@@ -94,4 +97,24 @@
 
   </form>
 
+</div>
+
+<div *ngIf="sendComplete" class="modal-header">
+  <h4 class="modal-title">Отправлено</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeSuccess()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div *ngIf="sendComplete" class="modal-body">
+
+  <div class="alert alert-success">
+    <p><strong>Сообщение о проблеме успешно отправлено:</strong></p>
+    <p>Дата: {{result.detection_date | date: 'd MMMM yyyy'}}</p>
+    <p>Приложение: {{result.application.name}}</p>
+    <p></p>
+  </div>
+  <div>
+    <button class="btn btn-dark form-button" (click)="closeSuccess()">Закрыть</button>
+  </div>
 </div>

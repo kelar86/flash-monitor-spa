@@ -15,11 +15,14 @@ import { Problem } from 'src/app/models/problem';
 })
 export class ProblemFormComponent implements OnInit, OnDestroy {
 
+  sendComplete = false;
+  result;
   error;
 
   private problem: Problem;
 
   detection_date;
+  time = {"hour": 0,  "minute": 0};
   application: Application;
   control_type;
   control = [];
@@ -95,7 +98,11 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
     this.deserializeForm();
     this.storage.postProblem(this.problem)
     .subscribe(
-      result => this.activeModal.close(result),
+      result => {
+        console.log(result);
+        this.result = result;
+        this.sendComplete = true;
+      },
       error => this.error = error.error);
   }
 
@@ -103,6 +110,11 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
     this.deserializeForm();
     this.storage.saveTempProblem(this.problem);
     this.activeModal.dismiss(this.problem);
+  }
+
+  closeSuccess() {
+    this.sendComplete = false;
+    this.activeModal.close();
   }
 
   ngOnDestroy() {
