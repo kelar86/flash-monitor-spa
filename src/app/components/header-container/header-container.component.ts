@@ -61,12 +61,9 @@ export class HeaderContainerComponent implements OnInit {
 
     modalReference.result.then((result) => {
 
-      console.log(result);
-      // result.subscribe(value => console.log(value))
-
       modalReference.close();
     }, (reason) => {
-      console.log(reason);
+
       modalReference.close()
     });
   }

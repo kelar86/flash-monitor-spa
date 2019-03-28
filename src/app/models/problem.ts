@@ -14,6 +14,7 @@ export class Problem implements Deserializable, Serializable {
     unit: Unit[];
     body_type: BodyType[];
     detection_date: {};
+    time: {};
     description: string;
     status: string;
     author: User;
@@ -38,11 +39,18 @@ export class Problem implements Deserializable, Serializable {
             control: this.control.map( item => item.id),
             unit: this.unit.map(item => item.id),
             body_type: this.body_type.map(item => item.id),
-            detection_date: new Date(this.detection_date['year'], this.detection_date['month'] - 1, this.detection_date['day']),
+            detection_date: new Date(
+                this.detection_date['year'], 
+                this.detection_date['month'] - 1, 
+                this.detection_date['day'],
+                this.time['hour'],
+                this.time["minute"],0,0),
             description: this.description,
             status: 'NEW',
             author: this.author.id
         };
 
     }
+
+   
 }

@@ -22,7 +22,7 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
   private problem: Problem;
 
   detection_date;
-  time = {"hour": 0,  "minute": 0};
+  time;
   application: Application;
   control_type;
   control = [];
@@ -53,9 +53,9 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
 
         // Try to match problem from the state
         this.storage.getTempProblem().subscribe(v => {
-          console.log(v.application);
           this.problem = v;
           this.detection_date = v.detection_date;
+          this.time = v.time;
           this.application = v.application ? v.application : this.applications[0];
           this.control_type = '';
           this.control = v.control ? v.control : [];
@@ -69,6 +69,11 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
       month: this.today.getMonth() + 1,
       day: this.today.getDate()
     };
+
+    this.time = this.time ? this.time : {
+      hour: this.today.getHours(),
+      minute: this.today.getMinutes()
+    }
 
   }
 
@@ -85,6 +90,7 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
     this.problem = new Problem().deserialize({
       application: this.application,
       detection_date: this.detection_date,
+      time: this.time,
       control_type: this.control_type,
       control: this.control,
       unit: this.unit,
@@ -99,7 +105,6 @@ export class ProblemFormComponent implements OnInit, OnDestroy {
     this.storage.postProblem(this.problem)
     .subscribe(
       result => {
-        console.log(result);
         this.result = result;
         this.sendComplete = true;
       },
