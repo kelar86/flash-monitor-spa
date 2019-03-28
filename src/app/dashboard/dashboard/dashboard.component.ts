@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { AlertList, Alert } from 'src/app/models/alert';
 import { Application, CrashedApp } from 'src/app/models/application';
@@ -32,7 +32,6 @@ import { User } from 'src/app/models/user';
   styles: []
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
   public alerts = new Subject<any>();
   public destroy$ = new Subject<any>();
 
@@ -107,14 +106,31 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
           })
           .reduce((acc, item): Application[] => {
-
-            const is_actual = acc.filter(app => app.id !== item.id && item.alert_category !== 'APPLICATION_ALERT')[0];
-            if (is_actual) {
-              return acc;
+            if (item.alert_category === 'APPLICATION_ALERT') {
+              var filtered = acc.filter(v => v.id !== item.id);
+              filtered.push(item);
+              return filtered;
             }
-            acc.push(item);
-            return acc;
+
+            if (item.alert_category === 'CONTROL_ALERT') {
+              if (acc.filter(v => {
+              
+               return  v.id === item.id
+              })[0]) {
+                return acc;
+              } else {
+                acc.push(item);
+                return acc;
+              }
+
+            }
+            
           }, [])
+          .filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
+          })
+          
+        
       ),
         takeUntil(this.destroy$));
     });

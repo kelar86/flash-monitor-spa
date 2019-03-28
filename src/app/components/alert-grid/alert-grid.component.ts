@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 
 @Component({
   selector: 'app-alert-grid',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="table-responsive">
       <table class="table table-bordered">

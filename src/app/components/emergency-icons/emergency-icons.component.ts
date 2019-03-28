@@ -1,5 +1,7 @@
+
 import { Application } from './../../models/application';
 import { Component, OnInit, Input } from '@angular/core';
+
 
 
 @Component({
@@ -57,6 +59,7 @@ export class EmergencyIconsComponent implements OnInit {
 
 
   ngOnInit() {
+    
   }
 
 

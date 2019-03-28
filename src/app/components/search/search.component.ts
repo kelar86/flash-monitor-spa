@@ -8,6 +8,7 @@ import {
   distinctUntilChanged,
   filter,
   switchMap,
+  map,
 } from 'rxjs/operators';
 
 
@@ -97,10 +98,11 @@ export class SearchComponent implements OnInit {
     )
       .pipe(
         switchMap(term => {
-          return this.api.getFilterAdvise(term, this.catalogType);
+          return this.api.getFilterAdvise(term, this.catalogType)
+          .pipe(map(data => (<Array<any>>data).slice(0, 10))
+          );
         }),
       );
-
 
 
   }
