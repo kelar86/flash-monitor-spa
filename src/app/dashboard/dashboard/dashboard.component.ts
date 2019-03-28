@@ -61,7 +61,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-   this.interval = setInterval(() => {
       this.api.getAlerts(this.filter).pipe(
         map(item => new AlertList(item)),
         takeUntil(this.destroy$)
@@ -71,7 +70,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // FIXME INNER SUBSCRIBTION
         this.storage.getUserProblems(this.user).pipe(first()).subscribe(v => this.problems = v);
       });
-    }, 250);
 
 
 
@@ -114,7 +112,52 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(data) {
-    this.filter = data.name;
+    this.api.getAlerts(data.name).pipe(
+      map(item => new AlertList(item)),
+      takeUntil(this.destroy$)
+    )
+      .subscribe(v => {
+        this.alerts.next(v);
+        // FIXME INNER SUBSCRIBTION
+        this.storage.getUserProblems(this.user).pipe(first()).subscribe(v => this.problems = v);
+      });
+
+
+    this.alerts.subscribe(value => {
+      this.byApplication = of(value).pipe(
+        map(list => list.getAlertsByApplicationCategory()),
+        takeUntil(this.destroy$));
+
+      this.byControl = of(value).pipe(
+        map(list => list.getAlertsByControlCategory()),
+        takeUntil(this.destroy$));
+
+      this.isPlaned = of(value).pipe(
+        map(list => list.getPlanedAlerts()),
+        takeUntil(this.destroy$));
+
+      this.applications = of(value).pipe(map(
+        list => list.getAlerts()
+          .map(alert => {
+            if (alert.category === 'APPLICATION_ALERT') {
+              return new CrashedApp('APPLICATION_ALERT').deserialize(alert.application);
+            }
+            if (alert.category === 'CONTROL_ALERT') {
+              return new CrashedApp('CONTROL_ALERT').deserialize(alert.application);
+            }
+          })
+          .reduce((acc, item): Application[] => {
+
+            const is_actual = acc.filter(app => app.id !== item.id && item.alert_category !== 'APPLICATION_ALERT')[0];
+            if (is_actual) {
+              return acc;
+            }
+            acc.push(item);
+            return acc;
+          }, [])
+      ),
+        takeUntil(this.destroy$));
+    });
   }
 
   ngOnDestroy() {
